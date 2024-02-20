@@ -19,6 +19,11 @@ use App\Models\masters\Prop;
 use App\Models\masters\Section;
 use App\Models\masters\Category;
 use App\Models\masters\Curriculum;
+use App\Models\masters\SportsShop;
+use App\Models\masters\LiveClass;
+use App\Models\masters\Yoga_Meditation;
+use App\Models\masters\Sports_news;
+use App\Models\masters\Events;
 use App\Models\NeedHelp;
 use App\Models\Notification;
 use App\Models\Student;
@@ -625,4 +630,87 @@ public function post_reporting(Request $request)
 
      }
 
+     public function get_sports_news()
+     {
+         $sports_news = Sports_news :: get();
+         
+         if($sports_news->isNotEmpty())
+         {
+         return response()->json(['status'=>true ,'data'=>$sports_news]);
+         }
+         else{
+         return response()->json(['status'=>false ,'message'=>'No Data Found']);
+         
+         }
+     }
+
+     public function get_yoga_meditation()
+     {
+         $yoga_meditation = Yoga_Meditation :: get();
+         
+         if($yoga_meditation->isNotEmpty())
+         {
+         return response()->json(['status'=>true ,'data'=>$yoga_meditation]);
+         }
+         else{
+         return response()->json(['status'=>false ,'message'=>'No Data Found']);
+         
+         }
+     }
+
+     public function get_live_class()
+     {
+         $live_class = LiveClass :: get();
+         
+         if($live_class->isNotEmpty())
+         {
+         return response()->json(['status'=>true ,'data'=>$live_class]);
+         }
+         else{
+         return response()->json(['status'=>false ,'message'=>'No Data Found']);
+         
+         }
+     }
+
+     public function get_sports_shop()
+     {
+         $sports_shop = SportsShop :: get();
+         
+         if($sports_shop->isNotEmpty())
+         {
+         return response()->json(['status'=>true ,'data'=>$sports_shop]);
+         }
+         else{
+         return response()->json(['status'=>false ,'message'=>'No Data Found']);
+         
+         }
+     }  
+
+     public function get_upcoming_event()
+     {
+         $upcomingEvents = Events::where('date', '>=', now()->toDateString())
+             ->orderBy('date', 'asc')
+             ->get();
+     
+         if ($upcomingEvents->isNotEmpty()) {
+             return response()->json(['status' => true, 'data' => $upcomingEvents]);
+         } else {
+             return response()->json(['status' => false, 'message' => 'No Upcoming Event Found']);
+         }
+     }
+
+            public function get_past_events()
+        {
+            $pastEvents = Events::where('date', '<', now()->toDateString())
+                ->orderBy('date', 'desc')
+                ->get();
+
+            if ($pastEvents->isNotEmpty()) {
+                return response()->json(['status' => true, 'data' => $pastEvents]);
+            } else {
+                return response()->json(['status' => false, 'message' => 'No Past Events Found']);
+            }
+        }
+
+       
 }

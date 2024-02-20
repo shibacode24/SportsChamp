@@ -5,14 +5,14 @@
 <div class="row">
     <div class="col-md-2" style="margin-top: 2vh;"></div>
     <div class="col-md-8" style="margin-top: 2vh;">
-        <form action="{{ route('blog_store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('sports_news_store') }}" method="post" enctype="multipart/form-data">
             @csrf
         <table width="80%">
             <tr style="height:30px;" >
                 <th width="1%">Date</th>
-                <th width="2%">Title of Blog</th>
+                <th width="2%">Title of News</th>
                 <th width="1%">Author Name</th>
-                <th width="1%">Upload Blog Image</th>
+                <th width="1%">Upload News Image</th>
               </tr>
 
 
@@ -78,9 +78,9 @@
                         <tr>
                             <th>Sr. No.</th>
                             <th>Date</th>
-                            <th>Title of Blog</th>
+                            <th>Title of News</th>
                             <th>Author Name</th>
-                            <th>Uploaded Blog Image</th>
+                            <th>Uploaded News Image</th>
                           
                           
                             <th>Content</th>
@@ -89,26 +89,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($blog as $blogs)
+                        @foreach ($news as $newss)
                             
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{date('d-m-Y', strtotime($blogs->date))}}</td>
-                            <td>{{$blogs->title}}</td>
-                            <td>{{$blogs->author_name}}</td>
+                            <td>{{date('d-m-Y', strtotime($newss->date))}}</td>
+                            <td>{{$newss->title}}</td>
+                            <td>{{$newss->author_name}}</td>
                             <td>
-                                <a href="{{ asset('images/blog_image/' . $blogs->image) }}" target="_blank">
-                                <img src="{{ asset('images/blog_image/' . $blogs->image) }}" width="50" height="50"/>
+                                <a href="{{ asset('images/sportsnews_image/' . $newss->image) }}" target="_blank">
+                                <img src="{{ asset('images/sportsnews_image/' . $newss->image) }}" width="50" height="50"/>
                                 </a>
                             </td>
-                          <td>{!! $blogs->content !!}</td>
+                          <td>{!! $newss->content !!}</td>
                           
                          
                             <td>
-                                <a href="{{ route('blog_edit', $blogs->id) }}">
+                                <a href="{{ route('sports_news_edit', $newss->id) }}">
                                 <button style="background-color:#3399ff; border:none; max-height:25px; margin-top:-5px; margin-bottom:-5px;" type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit" style="margin-left:5px;"></i></button>
                                 </a>
-                                <button onclick="openCustomModal('{{ route('blog_destroy', $blogs->id) }}')"
+                                <button onclick="openCustomModal('{{ route('sports_news_destroy', $newss->id) }}')"
                                     id="customModal" style="background-color:#ff0000; border:none; max-height:25px; margin-top:-5px; margin-bottom:-5px;" type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash-o" style="margin-left:5px;"></i></button>
                             </td>
                         </tr>

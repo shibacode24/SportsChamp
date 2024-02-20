@@ -148,7 +148,7 @@
                         @foreach ($employee as $employe)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $employe->date }}</td>
+                                <td>{{ date('d-m-Y', strtotime($employe->date)) }}</td>
                                 <td>{{ $employe->designation_name->designation ?? ''}}</td>
                                 <td>{{ $employe->city_name->city_name ?? ''}}</td>
                                 <td>{{ $employe->emp_code }}</td>

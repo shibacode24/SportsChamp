@@ -59,6 +59,17 @@ Route::post('post_reporting',[ApiController::class,'post_reporting']);
 Route::get('get_category',[ApiController::class,'get_category']);
 Route::get('get_curriculum',[ApiController::class,'get_curriculum']);
 Route::get('get_report',[ApiController::class,'get_report']);
+Route::get('get_sports_news',[ApiController::class,'get_sports_news']);
+Route::get('get_yoga_meditation',[ApiController::class,'get_yoga_meditation']);
+Route::get('get_live_class',[ApiController::class,'get_live_class']);
+Route::get('get_sports_shop',[ApiController::class,'get_sports_shop']);
+Route::get('get_upcoming_event',[ApiController::class,'get_upcoming_event']);
+Route::get('get_past_events',[ApiController::class,'get_past_events']);
+
+
+
+
+
 
 
 

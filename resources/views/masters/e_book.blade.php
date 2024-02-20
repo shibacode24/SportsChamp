@@ -91,7 +91,7 @@
                             
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$ebook->date}}</td>
+                            <td>{{date('d-m-Y', strtotime($ebook->date))}}</td>
                             <td>{{$ebook->title}}</td>
                             <td>
                               <a href="{{ asset('images/pdf/' . $ebook->pdf) }}" target="_blank">{{$ebook->pdf}}</a>

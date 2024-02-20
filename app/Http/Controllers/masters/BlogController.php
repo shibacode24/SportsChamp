@@ -70,7 +70,7 @@ class BlogController extends Controller
            $blog->author_name = $request->author_name;
            $blog->date= $request->date;
            $blog->title= $request->title;
-           $blog->content= $request->content;
+           $blog->content= $request->content ? $request->content : $blog->content;
            $blog->save();
 
       

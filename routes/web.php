@@ -12,6 +12,11 @@ use App\Http\Controllers\masters\ManageVideoController;
 use App\Http\Controllers\masters\StudentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\masters\Sports_newsController;
+use App\Http\Controllers\masters\Yoga_MeditationController;
+use App\Http\Controllers\masters\LiveClassController;
+use App\Http\Controllers\masters\Sports_ShopController;
+use App\Http\Controllers\masters\EventsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +43,9 @@ Route::get('login',[LoginController::class,'index'])->name('login');
 Route::post('login_submit',[LoginController::class,'check_login'])->name('login_submit');
 Route::get('logout',[LoginController::class,'log_out'])->name('logout');
 //end of login
+
+
+Route::group(['middleware'=>'CheckLogin'],function(){
 
 Route::get('all_masters',[All_masterController::class,'index'])->name('index');
 Route::post('masters',[All_masterController::class,'city_store'])->name('masters');
@@ -171,6 +179,47 @@ Route::get('notification_destroy/{id}',[NotificationController::class,'notificat
 
 //end of notification
 
+
+Route::get('sports_news',[Sports_newsController::class,'index'])->name('sports_news');
+Route::post('sports_news_create',[Sports_newsController::class,'sports_news_store'])->name('sports_news_store');
+Route::get('sports_news_edit/{id}',[Sports_newsController::class,'sports_news_edit'])->name('sports_news_edit');
+Route::post('update_sports_news',[Sports_newsController::class,'update_sports_news'])->name('update_sports_news');
+Route::get('sports_news_destroy/{id}',[Sports_newsController::class,'sports_news_destroy'])->name('sports_news_destroy');
+
+//end of sports_news
+
+Route::get('yoga_meditation',[Yoga_MeditationController::class,'index'])->name('yoga_meditation');
+Route::post('yoga_meditation_create',[Yoga_MeditationController::class,'yoga_meditation_store'])->name('yoga_meditation_store');
+Route::get('yoga_meditation_edit/{id}',[Yoga_MeditationController::class,'yoga_meditation_edit'])->name('yoga_meditation_edit');
+Route::post('update_yoga_meditation',[Yoga_MeditationController::class,'update_yoga_meditation'])->name('update_yoga_meditation');
+Route::get('yoga_meditation_destroy/{id}',[Yoga_MeditationController::class,'yoga_meditation_destroy'])->name('yoga_meditation_destroy');
+
+//end of yoga & meditation
+
+Route::get('sports_shop',[Sports_ShopController::class,'index'])->name('sports_shop');
+Route::post('sports_shop_create',[Sports_ShopController::class,'sports_shop_store'])->name('sports_shop_store');
+Route::get('sports_shop_edit/{id}',[Sports_ShopController::class,'sports_shop_edit'])->name('sports_shop_edit');
+Route::post('update_sports_shop',[Sports_ShopController::class,'update_sports_shop'])->name('update_sports_shop');
+Route::get('sports_shop_destroy/{id}',[Sports_ShopController::class,'sports_shop_destroy'])->name('sports_shop_destroy');
+
+//end of shop
+
+Route::get('live_class',[LiveClassController::class,'index'])->name('live_class');
+Route::post('live_class_create',[LiveClassController::class,'live_class_store'])->name('live_class_store');
+Route::get('live_class_edit/{id}',[LiveClassController::class,'live_class_edit'])->name('live_class_edit');
+Route::post('update_live_class',[LiveClassController::class,'update_live_class'])->name('update_live_class');
+Route::get('live_class_destroy/{id}',[LiveClassController::class,'live_class_destroy'])->name('live_class_destroy');
+
+//end of live class
+
+Route::get('event',[EventsController::class,'index'])->name('event');
+Route::post('event_create',[EventsController::class,'event_store'])->name('event_store');
+Route::get('event_edit/{id}',[EventsController::class,'event_edit'])->name('event_edit');
+Route::post('update_event',[EventsController::class,'update_event'])->name('update_event');
+Route::get('event_destroy/{id}',[EventsController::class,'event_destroy'])->name('event_destroy');
+
+//end of event
+
 Route::get('student-import',[StudentController::class,'student_import'])->name('student-import');
 Route::post('student-excel-import',[StudentController::class,'student_excel_import'])->name('student-excel-import');
 Route::get('get_student_list',[StudentController::class,'get_student_list'])->name('get_student_list');
@@ -180,6 +229,8 @@ Route::get('delete_student_school_code/{school_code}',[StudentController::class,
 
 Route::get('leave',[LeaveController::class,'leave'])->name('leave');
 Route::post('update_leave_status',[LeaveController::class,'update_leave_status'])->name('update_leave_status');
+
+});
 
 Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');

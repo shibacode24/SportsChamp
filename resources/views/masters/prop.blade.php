@@ -431,6 +431,7 @@
 
             $(".view_prop_list").on('click', function() {
                 console.log('alart');
+                $("#table_append").html('');
                 $.ajax({
                     type: "get",
                     url: '{{ route('get_prop_list') }}',
@@ -447,6 +448,7 @@
 
             $(".view_prop_list1").on('click', function() {
                 console.log('alart');
+                $("#table_append1").html('');
                 $.ajax({
                     type: "get",
                     url: '{{ route('get_issue_prop_list') }}',

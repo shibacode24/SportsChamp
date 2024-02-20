@@ -198,7 +198,7 @@
       <label>Password</label>
     </div>
     <div style="text-align: center;">
-        {{-- <a href="#"> --}}
+        <a href="#">
              <button type="submit">
             <span></span>
             <span></span>
@@ -207,7 +207,7 @@
             LOGIN
  </button>
 
-          {{-- </a> --}}
+          </a>
     </div>
     
   </form>

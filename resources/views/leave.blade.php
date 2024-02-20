@@ -26,7 +26,7 @@
                             @foreach ($leave as $leaves)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $leaves->emp_id }}</td>
+                                    <td>{{ $leaves->emp_name->name ?? '' }}</td>
                                     <td>{{ $leaves->leave_type }}</td>
                                     <td>{{ $leaves->from_date }}</td>
 

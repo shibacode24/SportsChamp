@@ -116,7 +116,7 @@
                         @foreach ($school as $schools)     
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$schools->date}}</td>
+                            <td>{{date('d-m-Y', strtotime($schools->date))}}</td>
                             <td>{{$schools->school_code}}</td>
                             <td>{{$schools->school_name}}</td>
                             <td>{{$schools->address}}</td>

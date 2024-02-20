@@ -53,8 +53,8 @@ class Grade_CardController extends Controller
         $grade_card =  Grade_Card::where('id',$request->id)->first();
         
         $grade_card->grade_id = $request->grade_id;
-        $grade_card->grade_content= $request->grade_content;
-       
+        $grade_card->grade_content= $request->grade_content ? $request->grade_content : $grade_card->grade_content;
+      
         $grade_card->save(); 
 
       

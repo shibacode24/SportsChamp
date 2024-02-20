@@ -38,8 +38,28 @@
                 class="fa fa-youtube"></i>Manage Videos</button>
     </a>
     <a href="{{route('grade_card')}}"> <button id="on" type="button" class="btn mjks"
-            style="color:#FFFFFF; height:30px; width:auto;background-color: #10cf89; "><i
-                class="fa fa-edit"></i>Grade Card Action</button>
-    </a>
+        style="color:#FFFFFF; height:30px; width:auto;background-color: #10cf89; "><i
+            class="fa fa-edit"></i>Grade Card Action</button>
+</a>
+<a href="{{route('sports_news')}}"> <button id="on" type="button" class="btn mjks"
+    style="color:#FFFFFF; height:30px; width:auto;background-color: #e43abf; "><i
+        class="fa fa-desktop"></i>Sports News</button>
+</a>
+<a href="{{route('yoga_meditation')}}"> <button id="on" type="button" class="btn mjks"
+    style="color:#FFFFFF; height:30px; width:auto;background-color: #da2d36; "><i
+        class="fa fa-child"></i>Yoga & Meditation</button>
+</a>
+<a href="{{route('live_class')}}"> <button id="on" type="button" class="btn mjks"
+    style="color:#FFFFFF; height:30px; width:auto;background-color: #a30554; "><i
+        class="fa fa-youtube-play"></i>Live Class</button>
+</a>
+<a href="{{route('sports_shop')}}"> <button id="on" type="button" class="btn mjks"
+    style="color:#FFFFFF; height:30px; width:auto;background-color: #f1970e; "><i
+        class="fa fa-shopping-cart"></i>Sports Shop</button>
+</a>
+<a href="{{route('event')}}"> <button id="on" type="button" class="btn mjks"
+    style="color:#FFFFFF; height:30px; width:auto;background-color: #02412a; "><i
+        class="fa fa-calendar-o"></i>Events</button>
+</a>
 
 </div>

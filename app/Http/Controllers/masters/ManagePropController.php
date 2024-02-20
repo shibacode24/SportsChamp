@@ -241,6 +241,7 @@ public function delete_added_issue_prop_list(Request $request)
 
 
 function get_issue_prop_list(Request $request){
+  // dd($request->id);
   $issue_prop_list=IssuePropList::
   where('issue_prop_id',$request->id)->get();
   $view=view('masters.issue_prop_list',compact('issue_prop_list'))->render();
