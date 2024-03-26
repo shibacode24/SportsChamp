@@ -1,6 +1,7 @@
 @extends('layout')
 @section('content')
 @include('master')
+@include('alert')
 
 <form action="{{ route('update_employee') }}" method="post">
     @csrf

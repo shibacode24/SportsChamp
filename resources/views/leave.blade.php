@@ -1,5 +1,7 @@
 @extends('layout')
 @section('content')
+@include('alert')
+
 
     <div class="page-content-wrap">
         <div class="row">

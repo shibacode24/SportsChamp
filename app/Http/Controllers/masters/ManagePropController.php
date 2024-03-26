@@ -153,6 +153,7 @@ function get_prop_list(Request $request){
 
 public function manage_prop_destroy($id){
     ManageProp::find($id)->delete();
+    ManagePropList::where('manage_prop_id',$id)->delete();
 
    return redirect(route('manage_prop'))->with('success', 'Manage Prop Deleted Successfully');
 }
@@ -249,8 +250,8 @@ function get_issue_prop_list(Request $request){
 }
 
 public function issue_prop_destroy($id){
-   IssueProp::find($id)->delete();
-
+ $issue_prop  =IssueProp::find($id)->delete();
+ IssuePropList::where('issue_prop_id',$id)->delete();
   return redirect(route('manage_prop'))->with('success', 'Issue Prop Deleted Successfully');
 }
 }

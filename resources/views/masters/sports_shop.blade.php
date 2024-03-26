@@ -1,6 +1,7 @@
 @extends('layout')
 @section('content')
     @include('master')
+    @include('alert')
     
     <div class="row">
      

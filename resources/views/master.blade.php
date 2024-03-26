@@ -61,5 +61,9 @@
     style="color:#FFFFFF; height:30px; width:auto;background-color: #02412a; "><i
         class="fa fa-calendar-o"></i>Events</button>
 </a>
+<a href="{{route('fitness_mantra')}}"> <button id="on" type="button" class="btn mjks"
+    style="color:#FFFFFF; height:30px; width:auto;background-color: #f74b70; "><i
+        class="fa fa-male"></i>Fitness Mantra</button>
+</a>
 
 </div>

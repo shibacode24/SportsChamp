@@ -18,11 +18,16 @@ class StudentsImport implements ToModel, WithHeadingRow
     {
         return new Student([
             'school_code' => $row['school_code'],
-            'class' => $row['class'],
+            'class' => $row['grade'],
             'section' => $row['section'],
             'roll_no' => $row['roll_no'],
             'name' => $row['name'],
-            'parent_name' => $row['parent_name'],
+            'email' => $row['email'],
+            'dob' => $row['dob'],
+            'father_name' => $row['father_name'],
+            'mother_name' => $row['mother_name'],
+            'father_no' => $row['father_no'],
+            'mother_no' => $row['mother_no'],
             'mobile_no' => $row['mobile_no'],
             'height' => $row['height'],
             'weight' => $row['weight'],

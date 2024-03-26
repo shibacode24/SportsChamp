@@ -1,9 +1,11 @@
 @extends('layout')
 @section('content')
     @include('master')
-    
+    @include('alert')
+
+
     <div class="row">
-     
+
         <div class="col-md-2" style="margin-top: 2vh;"></div>
         <div class="col-md-8" style="margin-top: 2vh;">
             <form action="{{ route('event_store') }}" method="post" enctype="multipart/form-data">
@@ -12,12 +14,13 @@
                     <tr style="height:30px;">
                         <th width="2%">Date</th>
                         <th width="2%">Event Name</th>
+                        <th width="2%">Event Details</th>
                         <th width="2%"></th>
                     </tr>
 
 
                     <tr>
-                        
+
                         <td style="padding: 2px;" width="2%">
                             <input type="date" class="form-control" name="date" placeholder="" />
                         </td>
@@ -26,7 +29,12 @@
                             <input type="text" class="form-control" name="event_name" placeholder="" />
 
                         </td>
-                       
+
+                        <td style="padding: 2px;" width="1%">
+                            {{-- <input type="text" class="form-control" name="event_name" placeholder="" /> --}}
+                            <textarea class="form-control" name="event_details"></textarea>
+                        </td>
+
                         <td>
                             <button id="on" type="submit" class="btn mjks"
                                 style="color:#FFFFFF; height:30px; width:auto;background-color: #006699;"><i
@@ -54,6 +62,7 @@
                             <th>Sr. No.</th>
                             <th>Date</th>
                             <th>Event Name</th>
+                            <th>Event Details</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -63,9 +72,10 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
                                     {{-- {{ $events->date->format('d/m/Y') }} --}}
-                                    {{date('d-m-Y', strtotime($events->date))}}</td>
+                                    {{ date('d-m-Y', strtotime($events->date)) }}</td>
                                 <td>{{ $events->event_name }}</td>
-                                
+                                <td>{{ $events->event_details }}</td>
+
                                 <td>
                                     <a href="{{ route('event_edit', $events->id) }}">
                                         <button

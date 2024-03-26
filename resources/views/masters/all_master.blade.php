@@ -1,6 +1,7 @@
 @extends('layout')
 @section('content')
     @include('master')
+    @include('alert')
 
     <div class="row">
         <div class="col-md-12" style="margin-top: 2vh;">
@@ -902,7 +903,273 @@
         </div>
     </div>
     <!-- ================================================end of vondor======================== -->
+    <div class="col-md-12">
+        <img src="{{ asset('img/line.png') }}" width="100%" />
+    </div>
+      {{-- ============================================== add curriculum================================ --}}
+      
+        <div class="col-md-12">
+      <form action="{{ route('curriculum_store') }}" method="post">
+        @csrf
 
+        <div class="col-md-2">
+            <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+            <select class="form-control select" data-live-search="true" name="grade_id">
+                <option value="">Select</option>
+                @foreach ($grade as $grade5)
+                    <option value="{{ $grade5->id }}">{{ $grade5->grade }}</option>
+                @endforeach
+
+
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <label class="control-label">Add Curriculum<font color="#FF0000">*</font></label>
+            <input type="text" class="form-control" name="curriculum" placeholder="" />
+        </div>
+
+        <div class="col-md-2" style="margin-top:15px;">
+            <button id="on" type="sub,it" class="btn mjks" style="color:#FFFFFF; height:30px; width:auto;">
+                <i class="fa fa-plus"></i>ADD</button>
+            <button id="on" type="button" data-toggle="modal" data-target="#popup7cm" class="btn mjks"
+                style="color:#FFFFFF; height:30px; width:auto;"> <i class="fa fa-gear"></i>Manage</button>
+
+        </div>
+
+    </form>
+
+    <div class="modal" id="popup7cm" tabindex="-1" role="dialog" aria-labelledby="smallModalHead"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="H4">Added Curriculum</h4>
+                </div>
+                <div class="modal-body" style="height:30%;padding: 10px;">
+                    <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Grade</th>
+
+                                    <th>Added Curriculum</th>
+
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($curriculum as $curriculums)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $curriculums->grade_name->grade ?? '' }}</td>
+
+                                        <td>{{ $curriculums->name }}</td>
+
+                                        <td>
+
+                                            <button data-toggle="modal" data-target="#popup17cm"
+                                                value="{{ $curriculums->id }}" curriculum_name="{{ $curriculums->name }}" curriculum_grade_id="{{ $curriculums->grade_id }}"
+                                                style="background-color:#3399ff; border:none; max-height:25px; margin-top:-5px; margin-bottom:-5px;"
+                                                type="button" class="btn btn-info editbtn_curriculum"
+                                                data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                    class="fa fa-edit" style="margin-left:5px;"></i></button>
+                                            <a href="{{ route('curriculum_destroy', $curriculums->id) }}"> <button
+                                                    style="background-color:#ff0000; border:none; max-height:25px; margin-top:-5px; margin-bottom:-5px;"
+                                                    type="button" class="btn btn-info" data-toggle="tooltip"
+                                                    data-placement="top" title="Delete"><i class="fa fa-trash-o"
+                                                        style="margin-left:5px;"></i></button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none !important; background-color: #FFF !important;">
+                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="popup17cm" tabindex="-1" role="dialog" aria-labelledby="smallModalHead"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="H4">Update Curriculum</h4>
+                </div>
+                {{-- <div class="modal-body" style="height:30%;padding: 10px;"> --}}
+                    <form action="{{ route('update_curriculum') }}" method="post">
+                        @csrf
+                        <input type="hidden" id="curriculum_id" name="curriculum_id">
+                        <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                                    <select class="form-control select" data-live-search="true" id="curriculum_grade_id"
+                                        name="grade_id">
+                                        <option value="">Select</option>
+                                        @foreach ($grade as $grade5)
+                                            <option value="{{ $grade5->id }}">{{ $grade5->grade }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label"> Add Curriculum<font color="#FF0000">*</font></label>
+                                    <input type="text" class="form-control" id="curriculum_name" name="curriculum"
+                                        placeholder="" />
+                                </div>
+
+                                <div class="col-md-3" style="margin-top:15px;padding-left: 10px;">
+                                    <button id="on" type="submit" class="btn mjks"
+                                        style="color:#FFFFFF; height:30px; width:auto;"> <i
+                                            class="fa fa-plus"></i>Update</button>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                {{-- </div> --}}
+                <div class="modal-footer" style="border: none !important; background-color: #FFF !important;">
+                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    {{-- ======================================== End curriculum model ============================== --}}
+
+          {{-- ============================================== add reason type================================ --}}
+          
+          <form action="{{ route('reason_type_store') }}" method="post">
+            @csrf
+    
+            <div class="col-md-2">
+                <label class="control-label">Add Reason<font color="#FF0000">*</font></label>
+                <input type="text" class="form-control" name="reason_name" placeholder="" />
+            </div>
+    
+            <div class="col-md-2" style="margin-top:15px;">
+                <button id="on" type="sub,it" class="btn mjks" style="color:#FFFFFF; height:30px; width:auto;">
+                    <i class="fa fa-plus"></i>ADD</button>
+                <button id="on" type="button" data-toggle="modal" data-target="#popup7r" class="btn mjks"
+                    style="color:#FFFFFF; height:30px; width:auto;"> <i class="fa fa-gear"></i>Manage</button>
+    
+            </div>
+    
+        </form>
+    
+        <div class="modal" id="popup7r" tabindex="-1" role="dialog" aria-labelledby="smallModalHead"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="H4">Added Reason</h4>
+                    </div>
+                    <div class="modal-body" style="height:30%;padding: 10px;">
+                        <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
+                            <table class="table datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Sr. No.</th>
+                                       
+                                        <th>Added Reason</th>
+    
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($reason as $reasons)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                           
+                                            <td>{{ $reasons->reason_name }}</td>
+    
+                                            <td>
+    
+                                                <button data-toggle="modal" data-target="#popup17r"
+                                                    value="{{ $reasons->id }}" reason_name="{{ $reasons->name }}" reason_grade_id="{{ $reasons->grade_id }}"
+                                                    style="background-color:#3399ff; border:none; max-height:25px; margin-top:-5px; margin-bottom:-5px;"
+                                                    type="button" class="btn btn-info editbtn_reason"
+                                                    data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                        class="fa fa-edit" style="margin-left:5px;"></i></button>
+                                                <a href="{{ route('reason_type_destroy', $reasons->id) }}"> <button
+                                                        style="background-color:#ff0000; border:none; max-height:25px; margin-top:-5px; margin-bottom:-5px;"
+                                                        type="button" class="btn btn-info" data-toggle="tooltip"
+                                                        data-placement="top" title="Delete"><i class="fa fa-trash-o"
+                                                            style="margin-left:5px;"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="border: none !important; background-color: #FFF !important;">
+                        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="modal" id="popup17r" tabindex="-1" role="dialog" aria-labelledby="smallModalHead"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+    
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="H4">Update Reason</h4>
+                    </div>
+                    {{-- <div class="modal-body" style="height:30%;padding: 10px;"> --}}
+                        <form action="{{ route('update_reason_type') }}" method="post">
+                            @csrf
+                            <input type="hidden" id="reason_id" name="reason_id">
+                            <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
+                                <div class="col-md-12">
+                                   
+                                    <div class="col-md-3">
+                                        <label class="control-label"> Add Reason<font color="#FF0000">*</font></label>
+                                        <input type="text" class="form-control" id="reason_name" name="reason_name"
+                                            placeholder="" />
+                                    </div>
+    
+                                    <div class="col-md-3" style="margin-top:15px;padding-left: 10px;">
+                                        <button id="on" type="submit" class="btn mjks"
+                                            style="color:#FFFFFF; height:30px; width:auto;"> <i
+                                                class="fa fa-plus"></i>Update</button>
+    
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    {{-- </div> --}}
+                    <div class="modal-footer" style="border: none !important; background-color: #FFF !important;">
+                        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+     
+        {{-- ======================================== End curriculum model ============================== --}}
 
     <div class="col-md-12">
         <img src="{{ asset('img/line.png') }}" width="100%" />
@@ -1363,124 +1630,7 @@
     </div>
     <!-- ======================================End skill model================================== -->
 
-      {{-- ============================================== add curriculum================================ --}}
 
-      <form action="{{ route('curriculum_store') }}" method="post">
-        @csrf
-        <div class="col-md-2">
-            <label class="control-label">Add Curriculum<font color="#FF0000">*</font></label>
-            <input type="text" class="form-control" name="curriculum" placeholder="" />
-        </div>
-
-        <div class="col-md-2" style="margin-top:15px;">
-            <button id="on" type="sub,it" class="btn mjks" style="color:#FFFFFF; height:30px; width:auto;">
-                <i class="fa fa-plus"></i>ADD</button>
-            <button id="on" type="button" data-toggle="modal" data-target="#popup7cm" class="btn mjks"
-                style="color:#FFFFFF; height:30px; width:auto;"> <i class="fa fa-gear"></i>Manage</button>
-
-        </div>
-
-    </form>
-
-    <div class="modal" id="popup7cm" tabindex="-1" role="dialog" aria-labelledby="smallModalHead"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="H4">Added Curriculum</h4>
-                </div>
-                <div class="modal-body" style="height:30%;padding: 10px;">
-                    <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
-                        <table class="table datatable">
-                            <thead>
-                                <tr>
-                                    <th>Sr. No.</th>
-
-                                    <th>Added Curriculum</th>
-
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($curriculum as $curriculums)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-
-                                        <td>{{ $curriculums->name }}</td>
-
-                                        <td>
-
-                                            <button data-toggle="modal" data-target="#popup17cm"
-                                                value="{{ $curriculums->id }}" curriculum_name="{{ $curriculums->name }}"
-                                                style="background-color:#3399ff; border:none; max-height:25px; margin-top:-5px; margin-bottom:-5px;"
-                                                type="button" class="btn btn-info editbtn_curriculum"
-                                                data-toggle="tooltip" data-placement="top" title="Edit"><i
-                                                    class="fa fa-edit" style="margin-left:5px;"></i></button>
-                                            <a href="{{ route('curriculum_destroy', $curriculums->id) }}"> <button
-                                                    style="background-color:#ff0000; border:none; max-height:25px; margin-top:-5px; margin-bottom:-5px;"
-                                                    type="button" class="btn btn-info" data-toggle="tooltip"
-                                                    data-placement="top" title="Delete"><i class="fa fa-trash-o"
-                                                        style="margin-left:5px;"></i></button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: none !important; background-color: #FFF !important;">
-                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="popup17cm" tabindex="-1" role="dialog" aria-labelledby="smallModalHead"
-        aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="H4">Update Curriculum</h4>
-                </div>
-                <div class="modal-body" style="height:30%;padding: 10px;">
-                    <form action="{{ route('update_curriculum') }}" method="post">
-                        @csrf
-                        <input type="hidden" id="curriculum_id" name="curriculum_id">
-                        <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
-                            <div class="col-md-12">
-
-                                <div class="col-md-6">
-                                    <label class="control-label"> Add Curriculum<font color="#FF0000">*</font></label>
-                                    <input type="text" class="form-control" id="curriculum_name" name="curriculum"
-                                        placeholder="" />
-                                </div>
-
-                                <div class="col-md-6" style="margin-top:15px;padding-left: 10px;">
-                                    <button id="on" type="submit" class="btn mjks"
-                                        style="color:#FFFFFF; height:30px; width:auto;"> <i
-                                            class="fa fa-plus"></i>Update</button>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer" style="border: none !important; background-color: #FFF !important;">
-                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    {{-- ======================================== End curriculum model ============================== --}}
 
     <!-- ================================================activity======================== -->
     <div class="col-md-12">
@@ -1932,10 +2082,22 @@
                 $('#popup17cm').modal('show');
 
                 $('#curriculum_name').val($(this).attr('curriculum_name'));
+                $('#curriculum_grade_id').val($(this).attr('curriculum_grade_id'));
                 $('#curriculum_id').val($(this).attr('value'));
-
+           
             });
 
+            $(document).on('click', '.editbtn_reason', function() {
+                var reason_id = $(this).val();
+
+                $('#popup17r').modal('show');
+
+                $('#reason_name').val($(this).attr('reason_name'));
+                $('#reason_id').val($(this).attr('value'));
+           
+            });
+
+            
             $(document).on('click', '.editbtn_vendor', function() {
                 var vendor_id = $(this).val();
 

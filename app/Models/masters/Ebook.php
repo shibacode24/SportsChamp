@@ -10,15 +10,17 @@ class Ebook extends Model
     use HasFactory;
     protected $table= 'ebook';
     protected $fillable = [
-        'grade_id',
-        'date',
+        'grade_id', 
         'title',
-        'pdf',
         
     ];
 
     public function grade_name()
 {
     return $this->hasOne(Grade::class, 'id', 'grade_id');
+}
+public function ebook_list_name()
+{
+    return $this->hasOne(Ebook_List::class, 'ebook_id', 'id');
 }
 }

@@ -10,6 +10,12 @@ class Curriculum extends Model
     use HasFactory;
     protected $table= 'curriculum';
     protected $fillable = [
-        'name'
+        'name',
+        'grade_id'
     ];
+
+    public function grade_name()
+    {
+        return $this->hasOne(Grade::class,'id','grade_id');
+    }
 }

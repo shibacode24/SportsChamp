@@ -1,6 +1,7 @@
 @extends('layout')
 @section('content')
     @include('master')
+    @include('alert')
 
 
     <div class="row">
@@ -22,7 +23,7 @@
 
 
                         <td style="padding:5px;" align="center">
-                            <a href="{{ asset('excel/student-entry-sample.xlsx') }}"> <button id="on" type="button"
+                            <a href="{{ asset('excel/student_entry_new.xlsx') }}"> <button id="on" type="button"
                                     class="btn mjks"
                                     style="color:#FFFFFF; height:30px; width:auto;background-color: #173b9f;">
                                     <i class="fa fa-download" aria-hidden="true"></i>Download Sample</button></a>

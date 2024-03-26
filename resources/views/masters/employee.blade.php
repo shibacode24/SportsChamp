@@ -1,6 +1,7 @@
 @extends('layout')
 @section('content')
     @include('master')
+    @include('alert')
 
 
     <form action="{{ route('employee_store') }}" method="post">
@@ -134,9 +135,9 @@
                             <th>Emp Code</th>
                             <th>Assign School</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Mobile No.</th>
                             <th>Address</th>
+                            <th>Mobile No.</th>
+                            <th>Email</th>                           
                             <th>Pincode</th>
                             <th>Username</th>
                             {{-- <th>Password</th> --}}

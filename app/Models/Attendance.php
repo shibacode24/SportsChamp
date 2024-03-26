@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\masters\Employee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +13,11 @@ class Attendance extends Model
     protected $fillable = [
         'emp_id',
         'date',
-        'start_time',
-        'end_time',
+        'time',
+        'in_out',
     ];
+    public function emp_name()
+    {
+        return $this->hasOne(Employee::class,'id','emp_id');
+    }
 }

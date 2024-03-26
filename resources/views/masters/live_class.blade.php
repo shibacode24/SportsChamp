@@ -1,9 +1,21 @@
 @extends('layout')
 @section('content')
     @include('master')
-    
+    @include('alert')
+    {{-- <div class="col-md-6 mb-2">
+        @if (session()->has('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session()->get('success') }}
+            </div>
+        @endif
+        @if (session()->has('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session()->get('error') }}
+            </div>
+        @endif
+    </div> --}}
     <div class="row">
-     
+        
         <div class="col-md-2" style="margin-top: 2vh;"></div>
         <div class="col-md-8" style="margin-top: 2vh;">
             <form action="{{ route('live_class_store') }}" method="post" enctype="multipart/form-data">
@@ -17,7 +29,7 @@
 
 
                     <tr>
-                        
+
                         <td style="padding: 2px;" width="2%">
                             <input type="text" class="form-control" name="title" placeholder="" />
                         </td>
@@ -26,7 +38,7 @@
                             <input type="text" class="form-control" name="link" placeholder="" />
 
                         </td>
-                       
+
                         <td>
                             <button id="on" type="submit" class="btn mjks"
                                 style="color:#FFFFFF; height:30px; width:auto;background-color: #006699;"><i
@@ -63,7 +75,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $live_classs->title }}</td>
                                 <td>{{ $live_classs->link }}</td>
-                                
+
                                 <td>
                                     <a href="{{ route('live_class_edit', $live_classs->id) }}">
                                         <button

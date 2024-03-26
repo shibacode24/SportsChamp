@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sports_news extends Model
 {
     use HasFactory;
-    protected $table= 'Sports_news';
+    protected $table= 'sports_news';
     protected $fillable = [
         'date',
         'title',

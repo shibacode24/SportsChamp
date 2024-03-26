@@ -1,6 +1,8 @@
 @extends('layout')
 @section('content')
     @include('master')
+    @include('alert')
+
 
     <div class="row">
         <div class="col-md-2" style="margin-top: 2vh;"></div>

@@ -17,8 +17,7 @@ use App\Models\masters\Fitness;
 use App\Models\masters\ActivityMaster;
 use App\Models\masters\Category;
 use App\Models\masters\Curriculum;
-
-
+use App\Models\masters\ReasonType;
 
 class All_masterController extends Controller
 {
@@ -36,9 +35,10 @@ class All_masterController extends Controller
         $activity = ActivityMaster::all();
         $category = Category::all();
         $curriculum = Curriculum::all();
+        $reason = ReasonType::all();
         
         return view('masters.all_master',['city'=>$city, 'designation'=>$designation,
-        'grade'=>$grade, 'section'=>$section, 'prop'=>$prop , 'vendor'=>$vendor , 'TestComponent'=>$TestComponent, 'fitness'=>$fitness, 'skills'=>$skill, 'activity'=>$activity, 'category'=>$category, 'curriculum'=>$curriculum]);
+        'grade'=>$grade, 'section'=>$section, 'prop'=>$prop , 'vendor'=>$vendor , 'TestComponent'=>$TestComponent, 'fitness'=>$fitness, 'skills'=>$skill, 'activity'=>$activity, 'category'=>$category, 'curriculum'=>$curriculum, 'reason'=>$reason]);
     }
 
 
@@ -235,11 +235,13 @@ public function category_destroy($id){
 public function curriculum_store(Request $request){
     $request ->validate([
         'curriculum'=>'required',
+        'grade_id'=>'required',
     ]);
 
     Curriculum::create([
 
         'name'=>$request->curriculum,
+        'grade_id'=>$request->grade_id,
     ]);
 
     return redirect()->back()->with('success', 'Curriculum Added Successfully');
@@ -250,6 +252,7 @@ public function update_curriculum(Request $request)
 $curriculum_id = $request->input('curriculum_id');
 $curriculum = Curriculum::find($curriculum_id);
 $curriculum->name = $request->input('curriculum');
+$curriculum->grade_id = $request->input('grade_id');
 $curriculum->update();
 return redirect()->back()->with('success', 'Curriculum Updated Successfully');
 }
@@ -435,5 +438,40 @@ public function curriculum_destroy($id){
         }
 
         //end activity
+
+        //reason type
+
+
+        public function reason_type_store(Request $request){
+// dd($request->all());
+            $request ->validate([
+                'reason_name'=>'required',
+            ]);
+        
+            ReasonType::create([
+                'reason_name'=>$request->reason_name,
+            ]);
+
+            return redirect()->back()->with('success', 'Reason Added Successfully');
+        }
+
+    public function update_reason_type(Request $request)
+     {
+        // dd($request->all());
+        $reason_type_id = $request->input('reason_id');
+        $reason_type = ReasonType::find($reason_type_id);
+        $reason_type->reason_name = $request->reason_name;
+       
+        $reason_type->update();
+        return redirect()->back()->with('success', 'Reason Updated Successfully');
+    }
+
+        public function reason_type_destroy($id){
+            $reason_type = ReasonType::find($id)->delete();
+
+            return redirect(route('index'))->with('success', 'Reason Deleted Successfully');
+        }
+
+        //end of reason type
 
 }

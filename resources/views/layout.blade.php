@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" id="theme" href="{{ asset('css/theme-default.css') }}" />
     <link rel="stylesheet" type="text/css" id="theme" href="{{ asset('css/notification.css') }}" />
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    
     <!-- EOF CSS INCLUDE -->
 </head>
 <style>
@@ -124,9 +125,9 @@
                         </ul>
                     </li> -->
 
-                <li>
+                {{-- <li>
                     <a href="{{route('tracking')}}" title="Tracking"><span class="fa fa-map-marker"> </span>Tracking</a>
-                </li>
+                </li> --}}
                 <li>
                     <a href="{{route('notification')}}" title="Notification"><span class="fa fa-bell"> </span>Notification</a>
                 </li>
@@ -135,6 +136,9 @@
                 </li>
                 <li>
                     <a href="{{route('leave')}}" title="Reports"><span class="fa fa-plus"> </span>Leave</a>
+                </li>
+                <li>
+                    <a href="{{route('time_table')}}" title="Time Table"><span class="fa fa-calendar"> </span>Time Table</a>
                 </li>
                 {{-- <li>
                     <a href="{{route('user_role')}}" title="User Roles"><span class="fa fa-users"> </span>User Roles</a>
@@ -285,17 +289,11 @@
                 </script>
 
                 <script>
-                    // Initialize Quill
-                    var quill = new Quill('#editor', {
-                        theme: 'snow' // You can choose a different theme if you prefer
-                    });
-                    // Function to update the hidden input with Quill content and submit the form
-                    function submitForm() {
-                        var editorContent = document.querySelector('.ql-editor').innerHTML;
-                        document.getElementById('editor-content').value = editorContent;
-                        // Submit the form
-                        document.getElementById('myForm').submit();
-                    }
+                
+                    setTimeout(() => {
+                        $('.alert_close_btn').trigger('click');
+                    }, 3000);
+
                 </script>
 
                 @yield('js')

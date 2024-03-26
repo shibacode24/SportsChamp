@@ -1,24 +1,20 @@
-<div class="row">
-    <div class="col-md-5"></div>
-    <div class="col-md-3">
-@if (Session::has('success'))
-    <div class="alert alert-success border-0 bg-success alert-dismissible fade show">
-        <div class="text-white">{!! Session::get('success') !!}</div>
-        <button type="button" class="btn-close btn-alert-close alert_close_btn" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="row justify-content-center" style="margin-left: 30%">
+    <div class="col-md-6 mb-2 mx-auto">
+        @if (session()->has('success'))
+        <div class="alert alert-success alert_close_btn" role="alert">
+            {{ session()->get('success') }}
+            <button type="button" class="close alert_close_btn" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+        @if (session()->has('error'))
+        <div class="alert alert-danger alert_close_btn" role="alert">
+            {{ session()->get('error') }}
+            <button type="button" class="close alert_close_btn" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
     </div>
-@endif
-@if (Session::has('delete'))
-    <div class="alert alert-secondary border-0 bg-secondary alert-dismissible fade show">
-        <div class="text-white">{!! Session::get('delete') !!}</div>
-        <button type="button" class="btn-close btn-alert-close alert_close_btn" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-
-@if (Session::has('error'))
-    <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show">
-        <div class="text-white">{!! Session::get('error') !!}</div>
-        <button type="button" class="btn-close btn-alert-close alert_close_btn" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-</div> 
- </div>
+</div>

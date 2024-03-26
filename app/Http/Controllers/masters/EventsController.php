@@ -20,14 +20,15 @@ class EventsController extends Controller
         $request ->validate([
             'date'=>'required',
             'event_name'=>'required',    
+            'event_details'=>'required',    
         ]);
     
       $event = new Events();
       $event->date= $request->date;
       $event->event_name= $request->event_name;
+      $event->event_details= $request->event_details;
 
-    
-    $event->save(); 
+      $event->save(); 
 
         return redirect()->back()->with('success', 'Events Added Successfully');
     }
@@ -47,10 +48,9 @@ class EventsController extends Controller
     
         $event->date= $request->date;
         $event->event_name= $request->event_name;
-           $event->save();
+        $event->event_details= $request->event_details;
+        $event->save();
 
-      
-      
     return redirect(route('event'))->with('success', 'Events Updated Successfully');
     }
 

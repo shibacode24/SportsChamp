@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\Assessment;
+use App\Models\AssessmentFiles;
 use App\Models\Attendance;
 use App\Models\DamageProp;
 use App\Models\Leave;
 use App\Models\masters\ActivityMaster;
 use App\Models\masters\Blog;
 use App\Models\masters\Ebook;
+use App\Models\masters\Ebook_List;
 use App\Models\masters\Employee;
 use App\Models\masters\Grade;
 use App\Models\masters\IssueProp;
@@ -29,7 +31,10 @@ use App\Models\Notification;
 use App\Models\Student;
 use App\Models\Reporting;
 use Illuminate\Http\Request;
-use Nette\Utils\Json;
+use App\Imports\AssessmentImport;
+use App\Models\masters\FitnessMantra;
+use App\Models\masters\ReasonType;
+use Maatwebsite\Excel\Facades\Excel;
 use Hash;
 use DB;
 
@@ -177,6 +182,36 @@ public function get_e_book(Request $request)
  }
 }
 
+public function get_e_book_list(Request $request)
+{
+ $e_book_list = Ebook_List :: where('ebook_id',$request->book_id)
+ ->get();
+ 
+ if($e_book_list->isNotEmpty())
+ {
+ return response()->json(['status'=>true ,'data'=>$e_book_list]);
+ }
+ else{
+ return response()->json(['status'=>false ,'message'=>'No e_book Found']);
+   
+ }
+}
+
+public function get_chapter_list(Request $request)
+{
+ $get_chapter_list = Ebook_List :: where('id',$request->chapter_id)
+ ->get();
+ 
+ if($get_chapter_list->isNotEmpty())
+ {
+ return response()->json(['status'=>true ,'data'=>$get_chapter_list]);
+ }
+ else{
+ return response()->json(['status'=>false ,'message'=>'No Chapter Found']);
+   
+ }
+}
+
 public function get_student()
 {
  $student = Student :: get();
@@ -275,51 +310,142 @@ public function post_activity(Request $request)
 
 }
 
+// public function post_assessment(Request $request)
+// {
+//     $fileName = '';
+
+//     if ($request->hasFile('file')) {
+//         $file = $request->file('file');
+//         $fileName = time() . '_' . $file->getClientOriginalName();
+//         $file->move(public_path('images/assessment_file'), $fileName);
+//         // $filename = $fileName;
+//     }
+//     $assessment = Assessment::create([
+//         'grade_id' => $request->grade_id,
+//         'section_id' => $request->section_id,
+//         'file' => $fileName,
+//     ]);
+
+   
+//         Excel::import(new AssessmentImport, $request->file('file')->store('temp'));
+
+
+//     if ($assessment) {
+//         return response()->json(['status' => true, 'message' => 'Assessment Submitted Successfully']);
+//     } else {
+//         return response()->json(['status' => false, 'message' => 'Failed to submit assessment'], 500);
+//     }
+// }
+
+
 public function post_assessment(Request $request)
 {
-    $fileName = '';
 
-    if ($request->hasFile('file')) {
-        $file = $request->file('file');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $file->move(public_path('images/assessment_file'), $fileName);
-        // $filename = $fileName;
+    try {
+        
+        $excel_id = time();
+        // Import data from Excel
+        Excel::import(new AssessmentImport($request->grade_id, $request->section_id, $request->emp_id ,$excel_id), $request->file('file')->store('temp'));
+    } catch (\Throwable $th) {
+        // Handle exception if Excel import fails
+        return response()->json(['status' => false, 'message' => 'Failed to import assessment data'], 500);
     }
-    $assessment = Assessment::create([
-        'grade_id' => $request->grade_id,
-        'section_id' => $request->section_id,
-        'file' => $fileName,
-    ]);
 
-    if ($assessment) {
-        return response()->json(['status' => true, 'message' => 'Assessment Submitted Successfully']);
-    } else {
-        return response()->json(['status' => false, 'message' => 'Failed to submit assessment'], 500);
-    }
+	$fileName = '';
+
+if ($request->hasFile('file')) {
+    $file = $request->file('file');
+    $fileName = time() . '_' . $file->getClientOriginalName();
+    $file->move(public_path('images/assessment_file'), $fileName);
+}
+
+$assessment = AssessmentFiles::create([
+
+    'assessment_excel_id' => $excel_id,
+    'emp_id' => $request->emp_id,
+    'grade_id' => $request->grade_id,
+    'section_id' => $request->section_id,
+    'file' => $fileName,
+]);
+    // Return success response
+    return response()->json(['status' => true, 'message' => 'Assessment Submitted Successfully']);
 }
 
 
+
+// public function get_assessment(Request $request)
+// {
+//     $assessment = DB::table('assessment');
+
+//     if(isset($request->from_date) && isset($request->to_date)) {
+//         $assessment = $assessment->whereDate('assessment.created_at', '<=', $request->to_date)
+//                             ->whereDate('assessment.created_at', '>=', $request->from_date);
+//     }
+//     $assessment = $assessment->leftJoin('section', 'section.id', '=', 'assessment.section_id')
+//                         ->leftJoin('grade', 'grade.id', '=', 'assessment.grade_id')
+//                         ->where('assessment.section_id', $request->section_id)
+//                         ->where('assessment.grade_id', $request->grade_id)
+//                         ->select('assessment.*', 'grade.grade', 'section.section_name')
+//                         ->get();
+                       
+//     if($assessment->isNotEmpty()) {
+//         return response()->json(['status' => true, 'data' => $assessment]);
+//     } else {
+//         return response()->json(['status' => false, 'message' => 'No Assessment Found']);
+//     }
+// }
+
+
+// public function get_assessment(Request $request)
+// {
+//     $assessment = DB::table('assessment_files');
+
+//     if(isset($request->from_date) && isset($request->to_date)) {
+//         $assessment->whereDate('assessment_files.created_at', '<=', $request->to_date)
+//                    ->whereDate('assessment_files.created_at', '>=', $request->from_date);
+//     }
+
+//     $assessment = $assessment->leftJoin('section', 'section.id', '=', 'assessment_files.section_id')
+//                              ->leftJoin('grade', 'grade.id', '=', 'assessment_files.grade_id')
+//                              ->where('assessment_files.section_id', $request->section_id)
+//                              ->where('assessment_files.grade_id', $request->grade_id)
+//                              ->where('assessment_files.emp_id', $request->emp_id)
+//                              ->select('assessment_files.*', 'grade.grade', 'section.section_name')
+// 	          				 ->get();
+//     if($assessment->isNotEmpty()) {
+//         return response()->json(['status' => true, 'data' => $assessment]);
+//     } else {
+//         return response()->json(['status' => false, 'message' => 'No Assessment Found']);
+//     }
+// }
+
 public function get_assessment(Request $request)
 {
-    $assessment = DB::table('assessment');
+    $assessment = DB::table('assessment_files');
 
     if(isset($request->from_date) && isset($request->to_date)) {
-        $assessment = $assessment->whereDate('assessment.created_at', '<=', $request->to_date)
-                            ->whereDate('assessment.created_at', '>=', $request->from_date);
+        $assessment->whereDate('assessment_files.created_at', '<=', $request->to_date)
+                   ->whereDate('assessment_files.created_at', '>=', $request->from_date);
     }
-    $assessment = $assessment->leftJoin('section', 'section.id', '=', 'assessment.section_id')
-                        ->leftJoin('grade', 'grade.id', '=', 'assessment.grade_id')
-                        ->where('assessment.section_id', $request->section_id)
-                        ->where('assessment.grade_id', $request->grade_id)
-                        ->select('assessment.*', 'grade.grade', 'section.section_name')
-                        ->get();
-                       
+
+    $assessment = $assessment->leftJoin('section', 'section.id', '=', 'assessment_files.section_id')
+                             ->leftJoin('grade', 'grade.id', '=', 'assessment_files.grade_id')
+                             ->where('assessment_files.section_id', $request->section_id)
+                             ->where('assessment_files.grade_id', $request->grade_id)
+                             ->where('assessment_files.emp_id', $request->emp_id)
+                             ->select('assessment_files.*', 'grade.grade', 'section.section_name')
+	                         ->get();
     if($assessment->isNotEmpty()) {
+        // foreach($assessment as $file) {
+        //     $file->file = base64_encode(file_get_contents(public_path('images/assessment_file/' . $file->file))); 
+        // }
+
         return response()->json(['status' => true, 'data' => $assessment]);
     } else {
         return response()->json(['status' => false, 'message' => 'No Assessment Found']);
     }
 }
+
 
 public function post_damage_prop(Request $request)
 {
@@ -427,9 +553,9 @@ public function post_attendance(Request $request)
    $insert=Attendance::create(
        [
     'emp_id'=>$request->emp_id, 
-    'start_time'=>date('G:i',strtotime($request->time)),
+    'time'=>date('G:i',strtotime($request->time)),
     'date'=>$request->date,
-   'end_time'=>$request->in_out,
+    'in_out'=>$request->in_out,
    ]);
    if($insert->id)
    {
@@ -439,6 +565,19 @@ public function post_attendance(Request $request)
        return response()->json(['status'=>false,'message'=>'Something Error Occure At Server']);
    }
 }
+// public function check_in_out(Request $request)
+// {
+//  $check_in_out=Attendance::where('emp_id',$request->emp_id)
+//  ->where('date',date('Y-m-d'))->OrderBy('id','desc')->first();
+//  if($check_in_out)
+//  {
+//    return response()->json(['status'=>true,'message'=>'Record Found','in_out' => $check_in_out->in_out]);
+//  }
+//  else{
+//    return response()->json(['status'=>false,'message'=>'Record Not Found','in_out' => 'out']);
+//  }
+// }
+
 public function check_in_out(Request $request)
 {
  $check_in_out=Attendance::where('emp_id',$request->emp_id)
@@ -448,7 +587,7 @@ public function check_in_out(Request $request)
    return response()->json(['status'=>true,'message'=>'Record Found','in_out' => $check_in_out->in_out]);
  }
  else{
-   return response()->json(['status'=>false,'message'=>'Record Not Found','in_out' => 'out']);
+   return response()->json(['status'=>false,'message'=>'Record Not Found','in_out' => 'not punch']);
  }
 }
 
@@ -551,30 +690,62 @@ public function delete_damage_prop(Request $request)
 
 public function post_reporting(Request $request)
 {
-    $filenames = [];
+    // $filenames = [];
 
-    // Check if files are present in request
-    if ($request->hasFile('files')) {
-        foreach ($request->file('files') as $file) {
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('images/assessment_files'), $fileName);
-            $filenames[] = $fileName;
-        }
-    }
+    // // Check if files are present in request
+    // if ($request->hasFile('files')) {
+    //     foreach ($request->file('files') as $file) {
+    //         $fileName = time() . '_' . $file->getClientOriginalName();
+    //         $file->move(public_path('images/assessment_files'), $fileName);
+    //         $filenames[] = $fileName;
+    //     }
+    // }
 
-    foreach ($filenames as $filename) {
+    // foreach ($filenames as $filename) {
+
+        $new_name = "";
+        if (isset($request->photo) && $request->photo != 'null') {
+           $extension= explode('/', mime_content_type($request->photo))[1];
+           $data = base64_decode(substr($request->photo, strpos($request->photo, ',') + 1));
+           $new_name='report'.rand(000,999). time() . '.' .$extension;
+           file_put_contents(public_path('images/report') . '/' . $new_name, $data);
+           }
+		 
+
     $report = Reporting::create([
+        'emp_id' => $request->emp_id,
         'grade_id' => $request->grade_id,
         'section_id' => $request->section_id,
         'curriculum_id' => $request->curriculum_id,
         'female_kid' => $request->female_kid,
         'male_kid' => $request->male_kid,
-        'photo' => $filename,
+        'photo' =>  $new_name,
         'feedback' => $request->feedback,
         'remark' => $request->remark,
+        'classStatus' => $request->classStatus,
+        'date' => $request->date,
+        'reason' => $request->reason,
+        'class_type' => $request->class_type,
+        'reason_type' => $request->reason_type
+        
     ]);
+
+    if ($report) {
+        return response()->json(['status' => true, 'message' => 'Report Submitted Successfully']);
+    } else {
+        return response()->json(['status' => false, 'message' => 'Failed to submit report']);
+    }
 }
 
+public function post_report_no_data(Request $request)
+{
+    $report = Reporting::create([
+    'classStatus' => $request->classStatus,
+        'date' => $request->date,
+        'reason' => $request->reason,
+        'class_type' => $request->class_type,
+        'reason_type' => $request->reason_type
+    ]);
     if ($report) {
         return response()->json(['status' => true, 'message' => 'Report Submitted Successfully']);
     } else {
@@ -610,27 +781,57 @@ public function post_reporting(Request $request)
             }
         }
 
-     public function get_report(Request $request)
-     {
-            $get_report = Reporting :: with('grade: grade','section: section_name','curriculum:name');
-            if(isset($request->from_date) && isset($request->to_date)) {
-                $get_report = $get_report->whereDate('reporting.created_at', '<=', $request->to_date)
-                                    ->whereDate('reporting.created_at', '>=', $request->from_date);
-            }
-            $get_report = $get_report ->get();
+    //  public function get_report(Request $request)
+    //  {
+    //         $get_report = Reporting :: 
+    //         leftjoin('grade','grade.id','=','reporting.grade_id')
+    //         ->leftjoin('section','section.id','=','reporting.section_id')
+    //         ->leftjoin('curriculum','curriculum.id','=','reporting.curriculum_id')
+    //         ->select('curriculum.name','section.section_name','reporting.*','grade_grade');
+    //         if(isset($request->from_date) && isset($request->to_date)) {
+    //             $get_report = $get_report->whereDate('reporting.created_at', '<=', $request->to_date)
+    //                                 ->whereDate('reporting.created_at', '>=', $request->from_date);
+    //         }
+    //         $get_report = $get_report ->get();
 
-        if($get_report->isNotEmpty())
-            {
-            return response()->json(['status'=>true ,'data'=>$get_report]);
-        }
-        else{
-        return response()->json(['status'=>false ,'message'=>'No Data Found']);
+    //     if($get_report->isNotEmpty())
+    //         {
+    //         return response()->json(['status'=>true ,'data'=>$get_report]);
+    //     }
+    //     else{
+    //     return response()->json(['status'=>false ,'message'=>'No Data Found']);
         
-        }
+    //     }
 
-     }
+    //  }
 
-     public function get_sports_news()
+
+    public function get_report(Request $request)
+    {
+           $get_report = Reporting :: 
+           leftjoin('grade','grade.id','=','reporting.grade_id')
+           ->leftjoin('section','section.id','=','reporting.section_id')
+           ->leftjoin('curriculum','curriculum.id','=','reporting.curriculum_id')
+           ->leftjoin('reason_type','reason_type.id','=','reporting.reason_type')
+           ->select('curriculum.name','section.section_name','reporting.*','grade.grade','reason_type.reason_name');
+           if(isset($request->from_date) && isset($request->to_date)) {
+               $get_report = $get_report->whereDate('reporting.created_at', '<=', $request->to_date)
+                                   ->whereDate('reporting.created_at', '>=', $request->from_date);
+           }
+           $get_report = $get_report ->get();
+
+       if($get_report->isNotEmpty())
+           {
+           return response()->json(['status'=>true ,'data'=>$get_report]);
+       }
+       else{
+       return response()->json(['status'=>false ,'message'=>'No Data Found']);
+       
+       }
+
+    }
+    
+     public function get_sports_news(Request $request)
      {
          $sports_news = Sports_news :: get();
          
@@ -644,6 +845,19 @@ public function post_reporting(Request $request)
          }
      }
 
+     public function sports_news(Request $request)
+     {
+         $sports_news = Sports_news :: where('id',$request->sports_id)->get();
+         
+         if($sports_news->isNotEmpty())
+         {
+         return response()->json(['status'=>true ,'data'=>$sports_news]);
+         }
+         else{
+         return response()->json(['status'=>false ,'message'=>'No Data Found']);
+         
+         }
+     }
      public function get_yoga_meditation()
      {
          $yoga_meditation = Yoga_Meditation :: get();
@@ -711,6 +925,117 @@ public function post_reporting(Request $request)
                 return response()->json(['status' => false, 'message' => 'No Past Events Found']);
             }
         }
+
+        public function user_reg(Request $request)
+        {
+            $user = Student ::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'father_name' => $request->father_name,
+                'mother_name' => $request->mother_name,
+                'address' => $request->address,
+                'email' => $request->email,
+                'dob' => $request->dob,
+                'father_no' => $request->father_no,
+                'mother_no' => $request->mother_no,
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+            ]); 
+            if ($user->isNotEmpty()) {
+                return response()->json(['status' => true, 'message' => 'Submitted Successfully']);
+            } else {
+                return response()->json(['status' => false, 'message' => 'No Past Events Found']);
+            }
+        }
+
+        public function get_curriculum_against_class(Request $request)
+        {
+            $curriculum = Curriculum::where('grade_id',$request->grade_ids)->get();
+            if ($curriculum) {
+                return response()->json(['status' => true, 'data' => $curriculum]);
+            } else {
+                return response()->json(['status' => false, 'message' => 'No Past Events Found']);
+            }
+        }
+
+                public function update_user(Request $request)
+        {
+            $new_name = "";
+            if (isset($request->image) && $request->image != 'null') {
+                $extension = explode('/', mime_content_type($request->image))[1];
+                $data = base64_decode(substr($request->image, strpos($request->image, ',') + 1));
+                $new_name = 'report' . rand(000, 999) . time() . '.' . $extension;
+                file_put_contents(public_path('images/user_image') . '/' . $new_name, $data);
+            }
+
+            $user = Student::find($request->user_id); 
+            
+            if (!$user) {
+                return response()->json(['status' => false, 'message' => 'User Not Found']);
+            }
+
+            $user->name = $request->name ??  $user->name;
+            $user->email = $request->email ?? $user->email;
+            $user->father_name = $request->father_name ?? $user->father_name;
+            $user->mother_name = $request->mother_name ?? $user->mother_name;
+            $user->address = $request->address ?? $user->address;
+            $user->dob = $request->dob ?? $user->dob;
+            $user->father_no = $request->father_no ?? $user->father_no;
+            $user->mother_no = $request->mother_no ?? $user->mother_no;
+            $user->roll_no = $request->roll_no ?? $user->roll_no;
+            $user->height = $request->height ?? $user->height;
+            $user->weight = $request->weight ?? $user->weight;
+            $user->class = $request->class ?? $user->class;
+            $user->username = $request->username ?? $user->username;
+            $user->password = Hash::make($request->password) ?? $user->password;
+            $user->image = $new_name ?? $user->image;
+            $user->save();
+
+            return response()->json(['status' => true, 'message' => 'Updated Successfully']);
+        }
+
+
+            public function fitness_mantra()
+            {
+                $fitness_mantra = FitnessMantra :: get();
+
+                if($fitness_mantra->isNotEmpty())
+                {
+                return response()->json(['status'=>true ,'data'=>$fitness_mantra]);
+                }
+                else{
+                return response()->json(['status'=>false ,'message'=>'No Fitness Mantra Found']);
+                
+                }
+            }
+
+            public function fitness_mantra_data(Request $request)
+            {
+                $fitness_mantra_data = FitnessMantra :: where('id',$request->fitness_mantra_id)->get();
+
+                if($fitness_mantra_data->isNotEmpty())
+                {
+                return response()->json(['status'=>true ,'data'=>$fitness_mantra_data]);
+                }
+                else{
+                return response()->json(['status'=>false ,'message'=>'No Fitness Mantra Found']);
+                
+                }
+            }
+
+            public function get_reason_type()
+            {
+                $reason_type = ReasonType :: get();
+
+                if($reason_type->isNotEmpty())
+                {
+                return response()->json(['status'=>true ,'data'=>$reason_type]);
+                }
+                else{
+                return response()->json(['status'=>false ,'message'=>'No Reason Found']);
+                
+                }
+            }
 
        
 }

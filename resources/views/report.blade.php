@@ -1,5 +1,7 @@
 @extends('layout')
 @section('content')
+@include('alert')
+
     <div class="row">
         <div class="col-md-12">
 
@@ -11,15 +13,15 @@
                         align="center"><span class="fa fa-file"></span> <strong>Reports</strong></label>
 
 
-                    <a href="#"> <button id="on" type="button" class="btn mjks"
+                    {{-- <a href="#"> <button id="on" type="button" class="btn mjks"
                             style="color:#FFFFFF; height:30px; width:auto;background-color: #006699;"><i
                                 class="fa fa-bank"></i>Schools</button>
-                    </a>
-                    <a href="#"> <button id="on" type="button" class="btn mjks"
+                    </a> --}}
+                    <a href="{{route('student_report')}}"> <button id="on" type="button" class="btn mjks"
                             style="color:#FFFFFF; height:30px; width:auto;background-color: #008799;"><i
                                 class="fa fa-users"></i>Students</button>
                     </a>
-                    <a href="#"> <button id="on" type="button" class="btn mjks"
+                    <a href="{{route('emp_report')}}"> <button id="on" type="button" class="btn mjks"
                             style="color:#FFFFFF; height:30px; width:auto;background-color: #009900;"><i
                                 class="fa fa-user"></i>Employees</button>
                     </a>
@@ -27,7 +29,7 @@
                             style="color:#FFFFFF; height:30px; width:auto;background-color: #998c00;"><i
                                 class="fa fa-bars"></i>Props</button>
                     </a>
-                    <a href="#"> <button id="on" type="button" class="btn mjks"
+                    <a href="{{route('assessment_report')}}"> <button id="on" type="button" class="btn mjks"
                             style="color:#FFFFFF; height:30px; width:auto;background-color: #7f0099;"><i
                                 class="fa fa-edit"></i>Assessments</button>
                     </a>

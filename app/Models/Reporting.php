@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\masters\Curriculum;
 use App\Models\masters\Grade;
 use App\Models\masters\Section;
+use App\Models\masters\Employee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use PhpParser\Node\Expr\Cast;
@@ -15,6 +16,7 @@ class Reporting extends Model
     protected $table= 'reporting';
     protected $fillable = [
         'grade_id',
+        'emp_id',
         'section_id',
         'curriculum_id',
         'female_kid',
@@ -22,6 +24,11 @@ class Reporting extends Model
         'photo',
         'feedback',
         'remark',
+        'classStatus',
+        'date',
+        'reason',
+        'class_type',
+        'reason_type',
     ];
 
     protected $Cast = [
@@ -42,5 +49,8 @@ class Reporting extends Model
     {
         return $this->hasOne(Curriculum::class, 'id', 'curriculum_id');
     }
-
+    public function emp_name()
+    {
+        return $this->hasOne(Employee::class,'id','emp_id');
+    }
 }

@@ -1,6 +1,8 @@
 @extends('layout')
 @section('content')
     @include('master')
+    @include('alert')
+
     
     <div class="row">
      
@@ -13,6 +15,7 @@
                     <tr style="height:30px;">
                         <th width="2%">Date</th>
                         <th width="2%">Event Name</th>
+                        <th width="2%">Event Details</th>
                         <th width="2%"></th>
                     </tr>
 
@@ -26,6 +29,11 @@
                         <td style="padding: 2px;" width="1%">
                             <input type="text" class="form-control" name="event_name" value="{{$event_edit->event_name}}" placeholder="" />
 
+                        </td>
+
+                        <td style="padding: 2px;" width="1%">
+                            {{-- <input type="text" class="form-control" name="event_name" placeholder="" /> --}}
+                            <textarea class="form-control" name="event_details">{{$event_edit->event_details}}</textarea>
                         </td>
                        
                         <td>

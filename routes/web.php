@@ -6,17 +6,20 @@ use App\Http\Controllers\masters\SchoolController;
 use App\Http\Controllers\masters\EmployeeController;
 use App\Http\Controllers\masters\EbookController;
 use App\Http\Controllers\masters\BlogController;
+use App\Http\Controllers\masters\fitness_mantraController;
 use App\Http\Controllers\masters\Grade_CardController;
 use App\Http\Controllers\masters\ManagePropController;
 use App\Http\Controllers\masters\ManageVideoController;
 use App\Http\Controllers\masters\StudentController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\TimeTableController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\masters\Sports_newsController;
 use App\Http\Controllers\masters\Yoga_MeditationController;
 use App\Http\Controllers\masters\LiveClassController;
 use App\Http\Controllers\masters\Sports_ShopController;
 use App\Http\Controllers\masters\EventsController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,14 +33,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::view('privacy','privacy')->name('privacy');
 
 Route::view('dashboard','dashboard')->name('dashboard');
 Route::view('tracking','tracking')->name('tracking');
 Route::view('user_role','user_role')->name('user_role');
 Route::view('report','report')->name('report');
+Route::view('time_table','time_table')->name('time_table');
 
 Route::get('login',[LoginController::class,'index'])->name('login');
 Route::post('login_submit',[LoginController::class,'check_login'])->name('login_submit');
@@ -76,6 +82,10 @@ Route::get('category_destroy/{id}',[All_masterController::class,'category_destro
 Route::post('curriculum_store',[All_masterController::class,'curriculum_store'])->name('curriculum_store');
 Route::post('update_curriculum',[All_masterController::class,'update_curriculum'])->name('update_curriculum');
 Route::get('curriculum_destroy/{id}',[All_masterController::class,'curriculum_destroy'])->name('curriculum_destroy');
+
+Route::post('reason_type_store',[All_masterController::class,'reason_type_store'])->name('reason_type_store');
+Route::post('update_reason_type',[All_masterController::class,'update_reason_type'])->name('update_reason_type');
+Route::get('reason_type_destroy/{id}',[All_masterController::class,'reason_type_destroy'])->name('reason_type_destroy');
 
 Route::post('vendor_store',[All_masterController::class,'vendor_store'])->name('vendor_store');
 Route::post('update_vendor',[All_masterController::class,'update_vendor'])->name('update_vendor');
@@ -120,6 +130,7 @@ Route::post('ebook_create',[EbookController::class,'ebook_store'])->name('ebook_
 Route::get('ebook_edit/{id}',[EbookController::class,'ebook_edit'])->name('ebook_edit');
 Route::post('update_ebook',[EbookController::class,'update_ebook'])->name('update_ebook');
 Route::get('ebook_destroy/{id}',[EbookController::class,'ebook_destroy'])->name('ebook_destroy');
+Route::get('get_ebook_list',[EbookController::class,'get_ebook_list'])->name('get_ebook_list');
 
 //end of ebook
 
@@ -130,6 +141,14 @@ Route::post('update_blog',[BlogController::class,'update_blog'])->name('update_b
 Route::get('blog_destroy/{id}',[BlogController::class,'blog_destroy'])->name('blog_destroy');
 
 //end of blog
+
+Route::get('fitness_mantra',[fitness_mantraController::class,'index'])->name('fitness_mantra');
+Route::post('fitness_mantra_create',[fitness_mantraController::class,'fitness_mantra_store'])->name('fitness_mantra_store');
+Route::get('fitness_mantra_edit/{id}',[fitness_mantraController::class,'fitness_mantra_edit'])->name('fitness_mantra_edit');
+Route::post('update_fitness_mantra',[fitness_mantraController::class,'update_fitness_mantra'])->name('update_fitness_mantra');
+Route::get('fitness_mantra_destroy/{id}',[fitness_mantraController::class,'fitness_mantra_destroy'])->name('fitness_mantra_destroy');
+
+//end of fitness mantra
 
 Route::get('grade_card',[Grade_CardController::class,'index'])->name('grade_card');
 Route::post('grade_card_create',[Grade_CardController::class,'grade_card_store'])->name('grade_card_store');
@@ -227,8 +246,25 @@ Route::get('delete_student_school_code/{school_code}',[StudentController::class,
 
 //end of student
 
+Route::get('time_table',[TimeTableController::class,'index'])->name('time_table');
+Route::post('time_table_create',[TimeTableController::class,'time_table_store'])->name('time_table_store');
+Route::get('time_table_edit/{id}',[TimeTableController::class,'time_table_edit'])->name('time_table_edit');
+Route::post('update_time_table',[TimeTableController::class,'update_time_table'])->name('update_time_table');
+Route::get('time_table_destroy/{id}',[TimeTableController::class,'time_table_destroy'])->name('time_table_destroy');
+Route::get('get_timetable_list',[TimeTableController::class,'get_timetable_list'])->name('get_timetable_list');
+Route::get('time_delete/{id}',[TimeTableController::class,'time_delete'])->name('time_delete');
+
+// end of time table
+
 Route::get('leave',[LeaveController::class,'leave'])->name('leave');
 Route::post('update_leave_status',[LeaveController::class,'update_leave_status'])->name('update_leave_status');
+
+Route::get('assessment_report',[ReportController::class,'assessment_report'])->name('assessment_report');
+Route::get('get_assessment_data',[ReportController::class,'get_assessment_data'])->name('get_assessment_data');
+Route::get('emp_report',[ReportController::class,'emp_report'])->name('emp_report');
+Route::get('prop_report',[ReportController::class,'prop_report'])->name('prop_report');
+Route::get('student_report',[ReportController::class,'student_report'])->name('student_report');
+Route::get('get_student_data',[ReportController::class,'get_student_data'])->name('get_student_data');
 
 });
 
