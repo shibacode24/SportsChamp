@@ -162,10 +162,6 @@
             </ul>
 
             <div class="page-content-wrap">
-                <div class="row">
-
-
-                </div>
                 <div class="modal" id="customModal" style="width:65% !important; margin-left:15%;">
                     <div class="modal-dialog" style="width:65% !important; margin-left:15%;">
                         <div class="modal-content">
@@ -210,7 +206,8 @@
                     </div>
                 </div>
                 <!-- END MESSAGE BOX-->
-
+            
+            
                 <!-- START PRELOADS -->
                 <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
                 <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
@@ -298,7 +295,9 @@
 
                 @yield('js')
 
-
+            </div>
+        </div>
+    </div>
 
 </body>
 

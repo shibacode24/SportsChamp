@@ -10,7 +10,7 @@
                 @csrf
                 <div class="col-md-4" style="margin-top: 2vh;"></div>
                 <div class="col-md-4" style="margin-top: 2vh;">
-                    <table>
+                    {{-- <table>
                         <tr style="height:30px;">
                             <th width="3%">Book Title</th>
                             <th width="2%">Select Grade</th>
@@ -31,12 +31,12 @@
                                 </select>
                             </td>
                         </tr>
-                    </table>
+                    </table> --}}
                 </div>
-                <table width="100%">
+                <table width="100%" style="background-color:#f0f0f0;">
                     <tr style="height:30px;">
-                        <th width="1%">Page No</th>
-                        <th width="1%">Chapter Name</th>
+                        <th width="1%">Book Title</th>
+                        <th width="1%">Select Grade</th>
                         <th width="1%">Upload Image</th>
                     
                         <th width="2%"></th>
@@ -46,15 +46,20 @@
 
                     <tr>
 
-                        <td style="padding: 2px;" width="1%">
-                            <input type="text" class="form-control" id="page_no"  placeholder="" />
+                        <td style="padding: 2px;" width="3%">
+                            <input type="text" class="form-control" name="title"  placeholder="" />
                         </td>
 
-                        <td style="padding: 2px;" width="1%">
-                            <input type="text" class="form-control" id="chapter_name" placeholder="" />
+                        <td style="padding: 2px;" width="3%">
+                            <select class="form-control select" data-live-search="true" name="grade_id">
+                                <option value="">Select</option>
+                                @foreach ($grade as $grades)
+                                    <option value="{{ $grades->id }}">{{ $grades->grade }}</option>
+                                @endforeach
+                            </select>
                         </td>
 
-                        <td style="padding: 2px;" width="1%">
+                        <td style="padding: 2px;" width="3%">
                             <input type="file" class="form-control" id="image" placeholder="" />
                         </td>
                         <td>
@@ -71,13 +76,13 @@
                     </tr>
 
                 </table>
-                <div class="col-md-12" style="margin-top: 2vh;">
-                    <table width="100%" border="1">
+                <div class="col-md-12" style="margin-top: 2vh;background-color:#f0f0f0;">
+                    <table width="100%" border="1" style="background-color:#f0f0f0;">
                         <tr style="background-color:#f0f0f0; height:30px;">
                             {{-- <th width="20%" style="text-align:center">Sr.No.</th> --}}
-                            <th width="20%" style="text-align:center">Page No</th>
-                            <th width="20%" style="text-align:center">Chapter Name</th>
-                            <th width="20%" style="text-align:center">Image</th>
+                            {{-- <th width="20%" style="text-align:center">Book Title</th>
+                            <th width="20%" style="text-align:center">Select Grade</th> --}}
+                            <th width="20%" style="text-align:center">Upload Image</th>
 
                             <th width="20%" style="text-align:center">Action</th>
                         </tr>
@@ -113,14 +118,14 @@
         </div>
     </div>
 </div>
-    <div class="row">
+    <div class="row" style="height: 400px">
         <div class="col-md-2" style="margin-top: 2vh;"></div>
         <div class="col-md-8" style="margin-top:15px;">
 
             <!-- START DEFAULT DATATABLE -->
 
-            <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
-                <table class="table datatable">
+            <div class="panel-body" style="margin-top:50px;">
+                <table class="table datatable" style="background-color:#f0f0f0;">
                     <thead>
                         <tr>
                             <th>Sr. No.</th>
@@ -144,7 +149,7 @@
 
                                 <td>
 
-                                    <button data-toggle="modal" data-target="#popup3" id="{{ $ebook->id }}"
+                                    <button data-toggle="modal" data-target="#popup3" id="{{ $ebook->grade_id }}"
                                         style="background-color:#3399ff; border:none; max-height:25px; margin-top:-5px; margin-bottom:-5px;"
                                         type="button" class="btn btn-info view_ebook_list" data-toggle="tooltip"
                                         data-placement="top" title="View"><i class="fa fa-eye"
@@ -175,8 +180,8 @@
 
             <!-- END DEFAULT DATATABLE -->
 
-
         </div>
+    
     </div>
 
 @stop
@@ -202,25 +207,22 @@
 
             $(".add-row").click(function() {
 
-                var page_no = $('#page_no').val();
-                var chapter_name = $('#chapter_name').val();
+                var title = $('#title').val();
+                var grade_id = $('#grade_id').val();
                 var image = $('#image').val();
                 var image_src = src;
                 let link = '';
                 link = '<img style="height:70px;width:auto;" src="' + image_src + '">';
                 var markup =
-                    '<tr><td><input type="text" name="page_no[]" required="" style="border:none; width: 100%;" value="' +
-                    page_no + '"></td>' +
-                    '<td><input type="text" name="chapter_name[]" required="" style="border:none; width: 100%;" value="' +
-                    chapter_name + '"></td>' + '<td><input name="image[]" type="hidden" value="' +
+                    '<tr><td style="text-align:center;"><input name="image[]" type="hidden" value="' +
                     blob + '"><a target="_blank" href="' + image_src + '" >' + link + '</a></td>' +
                     '<td style="text-align:center; color:#FF0000"><button class="delete-row1"><i class="fa fa-trash-o"></i></button></td></tr>';
 
                 $(".add_more").append(markup);
 
                 // Clear the input field
-                $('#page_no').val('');
-                $('#chapter_name').val('');
+                $('#title').val('');
+                $('#grade_id').val('');
                 $('#image').val('');
                 src = null;
                 blob = null;

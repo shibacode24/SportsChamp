@@ -18,8 +18,8 @@
                     <th width="3%">Contact Person Name</th>
                     <th width="2%">Contact No.</th>
                     <th width="2%">Email</th>
-                    <th width="1%">Latitude</th>
-                    <th width="1%">Longitude </th>
+                    {{-- <th width="1%">Latitude</th>
+                    <th width="1%">Longitude </th> --}}
                     <th width="2%"></th>
                 </tr>
 
@@ -69,12 +69,12 @@
                     <td style="padding: 2px;" width="2%">
                         <input type="text" class="form-control" name="email" value="{{$school_edit->email}}" placeholder="" />
                     </td>
-                    <td style="padding: 2px;" width="1%">
+                    {{-- <td style="padding: 2px;" width="1%">
                         <input type="text" class="form-control" name="latitude" value="{{$school_edit->latitude}}" placeholder="" />
                     </td>
                     <td style="padding: 2px;" width="1%">
                         <input type="text" class="form-control" name="longitude" value="{{$school_edit->longitude}}" placeholder="" />
-                    </td>
+                    </td> --}}
                     <td>
                         <button id="on" type="submit" class="btn mjks"
                             style="color:#FFFFFF; height:30px; width:auto;background-color: #006699;"><i

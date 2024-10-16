@@ -25,13 +25,27 @@ class Yoga_MeditationController extends Controller
             
         ]);
       
-        $filename="";
+        // $filename="";
+        // if ($request->hasFile('video_image')) {
+        //     $file = $request->file('video_image');
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('images/yoga_meditation_image'), $filename);
+    
+        // } 
+
+        $filename = "";
         if ($request->hasFile('video_image')) {
             $file = $request->file('video_image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/yoga_meditation_image'), $filename);
+            $extension = $file->getClientOriginalExtension();
     
-        } 
+            // Compress the image
+            $filePath = $file->getPathname();
+            app('compressImage')($filePath, $extension); // Single line for compression
+    
+            // Generate a new filename and move the compressed image
+            $filename = time() . '.' . $extension;
+            $file->move(public_path('images/yoga_meditation_image'), $filename);
+        }
  
       $yoga_meditation = new Yoga_Meditation();
       $yoga_meditation->date= $request->date;
@@ -57,14 +71,28 @@ class Yoga_MeditationController extends Controller
 
         $yoga_meditation =  Yoga_Meditation::where('id',$request->id)->first();
         
+        // if ($request->hasFile('video_image')) {
+        //     $file = $request->file('video_image');
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('images/yoga_meditation_image'), $filename);
+        //     $yoga_meditation->video_image=$filename;
+    
+        // } 
+
+        $filename = "";
         if ($request->hasFile('video_image')) {
             $file = $request->file('video_image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
+    
+            // Compress the image
+            $filePath = $file->getPathname();
+            app('compressImage')($filePath, $extension); // Single line for compression
+    
+            // Generate a new filename and move the compressed image
+            $filename = time() . '.' . $extension;
             $file->move(public_path('images/yoga_meditation_image'), $filename);
             $yoga_meditation->video_image=$filename;
-    
-        } 
-
+        }
            $yoga_meditation->date= $request->date;
            $yoga_meditation->title= $request->title;
            $yoga_meditation->video_link= $request->video_link;

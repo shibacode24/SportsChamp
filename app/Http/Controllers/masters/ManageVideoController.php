@@ -25,13 +25,27 @@ class ManageVideoController extends Controller
             
         ]);
       
-        $filename="";
+        // $filename="";
+        // if ($request->hasFile('video_image')) {
+        //     $file = $request->file('video_image');
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('images/video_image'), $filename);
+    
+        // } 
+
+        $filename = "";
         if ($request->hasFile('video_image')) {
             $file = $request->file('video_image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/video_image'), $filename);
+            $extension = $file->getClientOriginalExtension();
     
-        } 
+            // Compress the image
+            $filePath = $file->getPathname();
+            app('compressImage')($filePath, $extension); // Single line for compression
+    
+            // Generate a new filename and move the compressed image
+            $filename = time() . '.' . $extension;
+            $file->move(public_path('images/video_image'), $filename);
+        }
  
       $video = new ManageVideo();
       $video->date= $request->date;
@@ -57,13 +71,29 @@ class ManageVideoController extends Controller
 
         $video =  ManageVideo::where('id',$request->id)->first();
         
+        // if ($request->hasFile('video_image')) {
+        //     $file = $request->file('video_image');
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('images/video_image'), $filename);
+        //     $video->video_image=$filename;
+    
+        // } 
+
+        $filename = "";
         if ($request->hasFile('video_image')) {
             $file = $request->file('video_image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
+    
+            // Compress the image
+            $filePath = $file->getPathname();
+            app('compressImage')($filePath, $extension); // Single line for compression
+    
+            // Generate a new filename and move the compressed image
+            $filename = time() . '.' . $extension;
             $file->move(public_path('images/video_image'), $filename);
             $video->video_image=$filename;
-    
-        } 
+        }
+ 
 
            $video->date= $request->date;
            $video->title= $request->title;

@@ -22,13 +22,27 @@ class Sports_ShopController extends Controller
             'image'=>'required',    
         ]);
       
-        $filename="";
+        // $filename="";
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('images/sports_shop_image'), $filename);
+    
+        // } 
+
+        $filename = "";
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/sports_shop_image'), $filename);
+            $extension = $file->getClientOriginalExtension();
     
-        } 
+            // Compress the image
+            $filePath = $file->getPathname();
+            app('compressImage')($filePath, $extension); // Single line for compression
+    
+            // Generate a new filename and move the compressed image
+            $filename = time() . '.' . $extension;
+            $file->move(public_path('images/sports_shop_image'), $filename);
+        }
     
       $sports_shop = new SportsShop();
       $sports_shop->title= $request->title;
@@ -53,13 +67,28 @@ class Sports_ShopController extends Controller
         $sports_shop =  SportsShop::where('id',$request->id)->first();
         // echo json_encode($sports_shop);
         
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('images/sports_shop_image'), $filename);
+        //     $sports_shop->image=$filename;
+    
+        // } 
+
+        $filename = "";
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
+    
+            // Compress the image
+            $filePath = $file->getPathname();
+            app('compressImage')($filePath, $extension); // Single line for compression
+    
+            // Generate a new filename and move the compressed image
+            $filename = time() . '.' . $extension;
             $file->move(public_path('images/sports_shop_image'), $filename);
             $sports_shop->image=$filename;
-    
-        } 
+        }
            $sports_shop->title= $request->title;
            $sports_shop->save();
 

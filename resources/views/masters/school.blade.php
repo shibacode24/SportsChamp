@@ -17,8 +17,8 @@
                 <th width="3%">Contact Person Name</th>
                 <th width="2%">Contact No.</th>
                 <th width="2%">Email</th>
-                <th width="1%">Latitude</th>
-                <th width="1%">Longitude </th>
+                {{-- <th width="1%">Latitude</th>
+                <th width="1%">Longitude </th> --}}
                 <th width="2%"></th>
             </tr>
 
@@ -68,12 +68,12 @@
                 <td style="padding: 2px;" width="2%">
                     <input type="text" class="form-control" name="email" placeholder="" />
                 </td>
-                <td style="padding: 2px;" width="1%">
+                {{-- <td style="padding: 2px;" width="1%">
                     <input type="text" class="form-control" name="latitude" placeholder="" />
                 </td>
                 <td style="padding: 2px;" width="1%">
                     <input type="text" class="form-control" name="longitude" placeholder="" />
-                </td>
+                </td> --}}
                 <td>
                     <button id="on" type="submit" class="btn mjks"
                         style="color:#FFFFFF; height:30px; width:auto;background-color: #006699;"><i class="fa fa-floppy-o"
@@ -109,7 +109,7 @@
                             <th>Contact Person Name</th>
                             <th>Contact No.</th>
                             <th>Email</th>
-                            <th>Lat/Lang</th>
+                            {{-- <th>Lat/Lang</th> --}}
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -125,8 +125,8 @@
                             <td>{{$schools->contact_person_name ?? ''}}</td>
                             <td>{{$schools->contact_no}}</td>
                             <td>{{$schools->email}}</td>
-                            <td>{{$schools->latitude}}</td>
-                            <td>{{$schools->longitude}}</td>
+                            {{-- <td>{{$schools->latitude}}</td>
+                            <td>{{$schools->longitude}}</td> --}}
                             <td>
                                         
                               <a href="{{route('school_edit',$schools->id)}}">  <button style="background-color:#3399ff; border:none; max-height:25px; margin-top:-5px; margin-bottom:-5px;" type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit" style="margin-left:5px;"></i></button>

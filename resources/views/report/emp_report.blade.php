@@ -83,7 +83,7 @@
                                                 <td>{{$loop->iteration}}</td>
 
                                                 <td>{{$attendances->emp_name->name}}</td>
-                                                <td>{{$attendances->date}}</td>
+                                                <td>{{date('d-m-Y',strtotime($attendances->date))}}</td>
                                                
                                             </tr>
 
@@ -118,9 +118,9 @@
                                                 <td>{{$loop->iteration}}</td>
 
                                                 <td>{{$leaves->emp_name->name}}</td>
-                                                <td>{{$leaves->leave_type}}</td>
-                                                <td>{{$leaves->from_date}}</td>
-                                                <td>{{$leaves->to_date}}</td>
+                                                <td>{{$leaves->leave_type }}</td>
+                                                <td>{{date('d-m-Y',strtotime($leaves->from_date))}}</td>
+                                                <td>{{date('d-m-Y',strtotime($leaves->to_date))}}</td>
                                                 <td>{{$leaves->reason}}</td>
                                                 {{-- <td>{{$leaves->admin_remark}}</td> --}}
                                                 <td>{{$leaves->status}}</td>
@@ -140,11 +140,14 @@
                                             <tr>
                                                 <th>Sr. No.</th>
                                                 <th>Emp Name</th>
-                                                <th>Photo</th>
-
-                                                <th>Remark</th>
-
-                            
+                                                <th>Grade</th>
+                                                <th>Section</th>
+                                                <th>Curriculum</th>
+                                                <th>Female Kid</th>
+                                                <th>Male Kid</th>
+                                                <th>Feedback</th>
+                                                <th>Class Type</th>
+                                                {{-- <th>Class Status</th> --}}
                                                 <!-- <th>Action</th> -->
                                             </tr>
                                         </thead>
@@ -155,11 +158,18 @@
                                                 <td>{{$loop->iteration}}</td>
 
                                                 <td>{{$daily_reports->emp_name->name}}</td>
-                                                <td>
+                                                <td>{{$daily_reports->grade->grade ?? ''}}</td>
+                                                <td>{{$daily_reports->section->section_name ?? ''}}</td>
+                                                <td>{{$daily_reports->curriculum->name ?? ''}}</td>
+                                                <td>{{$daily_reports->female_kid}}</td>
+                                                <td>{{$daily_reports->male_kid}}</td>
+                                                <td>{{$daily_reports->feedback}}</td>
+                                                <td>{{$daily_reports->class_type}}</td>
+                                                {{-- <td>
                                                     <a href="{{asset("images/report/$daily_reports->photo")}}"><img src="{{asset("images/report/$daily_reports->photo")}}"
                                                         ></a>
-                                                </td>
-                                                <td>{{$daily_reports->remark}}</td>
+                                                </td> --}}
+                                                {{-- <td>{{$daily_reports->classStatus}}</td> --}}
                                                
                                             </tr>
 

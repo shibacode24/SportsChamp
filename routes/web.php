@@ -19,6 +19,7 @@ use App\Http\Controllers\masters\Yoga_MeditationController;
 use App\Http\Controllers\masters\LiveClassController;
 use App\Http\Controllers\masters\Sports_ShopController;
 use App\Http\Controllers\masters\EventsController;
+use App\Http\Controllers\masters\PrincipalController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -124,6 +125,14 @@ Route::post('update_employee',[EmployeeController::class,'update_employee'])->na
 Route::get('employee_destroy/{id}',[EmployeeController::class,'employee_destroy'])->name('employee_destroy');
 
 //end of emp
+
+Route::get('principal',[PrincipalController::class,'index'])->name('principal');
+Route::post('principal_create',[PrincipalController::class,'principal_store'])->name('principal_store');
+Route::get('principal_edit/{id}',[PrincipalController::class,'principal_edit'])->name('principal_edit');
+Route::post('update_principal',[PrincipalController::class,'update_principal'])->name('update_principal');
+Route::get('principal_destroy/{id}',[PrincipalController::class,'principal_destroy'])->name('principal_destroy');
+
+//end of principal
 
 Route::get('ebook',[EbookController::class,'index'])->name('ebook');
 Route::post('ebook_create',[EbookController::class,'ebook_store'])->name('ebook_store');

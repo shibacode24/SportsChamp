@@ -12,6 +12,7 @@ class Ebook extends Model
     protected $fillable = [
         'grade_id', 
         'title',
+        'image',
         
     ];
 

@@ -26,13 +26,27 @@ class Sports_newsController extends Controller
             
         ]);
       
-        $filename="";
+        // $filename="";
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('images/sportsnews_image'), $filename);
+    
+        // } 
+        $filename = "";
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/sportsnews_image'), $filename);
+            $extension = $file->getClientOriginalExtension();
     
-        } 
+            // Compress the image
+            $filePath = $file->getPathname();
+            app('compressImage')($filePath, $extension); // Single line for compression
+    
+            // Generate a new filename and move the compressed image
+            $filename = time() . '.' . $extension;
+            $file->move(public_path('images/sportsnews_image'), $filename);
+
+        }
     
       $news = new Sports_news();
       $news->author_name = $request->author_name;
@@ -60,13 +74,28 @@ class Sports_newsController extends Controller
         $news =  Sports_news::where('id',$request->id)->first();
         // echo json_encode($news);
         
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('images/sportsnews_image'), $filename);
+        //     $news->image=$filename;
+    
+        // } 
+
+        $filename = "";
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
+    
+            // Compress the image
+            $filePath = $file->getPathname();
+            app('compressImage')($filePath, $extension); // Single line for compression
+    
+            // Generate a new filename and move the compressed image
+            $filename = time() . '.' . $extension;
             $file->move(public_path('images/sportsnews_image'), $filename);
             $news->image=$filename;
-    
-        } 
+        }
 
            $news->author_name = $request->author_name;
            $news->date= $request->date;

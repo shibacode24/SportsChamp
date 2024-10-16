@@ -4,7 +4,12 @@
     @include('alert')
 
     <div class="row">
+        <div class="col-md-12">
+            <img src="{{ asset('img/line.png') }}" width="100%" />
+        </div>
         <div class="col-md-12" style="margin-top: 2vh;">
+        <h5 style="font-weight: bold;text-align: center;">Add City, Designation and Class</h5>
+
             <form action="{{ route('masters') }}" method="post">
                 @csrf
                 <div class="col-md-2">
@@ -244,7 +249,7 @@
             <form action="{{ route('grade_store') }}" method="post">
                 @csrf
                 <div class="col-md-2">
-                    <label class="control-label">Add Grade<font color="#FF0000">*</font></label>
+                    <label class="control-label">Add Class<font color="#FF0000">*</font></label>
                     <input type="text" class="form-control" name="grade" placeholder="" />
                 </div>
 
@@ -267,7 +272,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span
                                 aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="H4">Added Grade</h4>
+                        <h4 class="modal-title" id="H4">Added Class</h4>
                     </div>
                     <div class="modal-body" style="height:30%;padding: 10px;">
                         <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
@@ -276,7 +281,7 @@
                                     <tr>
                                         <th>Sr. No.</th>
 
-                                        <th>Added Grade</th>
+                                        <th>Added Class</th>
 
                                         <th>Action</th>
                                     </tr>
@@ -324,7 +329,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span
                                 aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="H4">Update Grade</h4>
+                        <h4 class="modal-title" id="H4">Update Class</h4>
                     </div>
                     <div class="modal-body" style="height:30%;padding: 10px;">
                         <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
@@ -334,7 +339,7 @@
                                 <div class="col-md-12">
 
                                     <div class="col-md-6">
-                                        <label class="control-label"> Grade<font color="#FF0000">*</font></label>
+                                        <label class="control-label"> Class<font color="#FF0000">*</font></label>
                                         <input type="text" class="form-control" id="grade" name="grade"
                                             placeholder="" />
                                     </div>
@@ -362,11 +367,13 @@
         <div class="col-md-12">
             <img src="{{ asset('img/line.png') }}" width="100%" />
         </div>
+        <h5 style="font-weight: bold;text-align: center;">Add Section, Prop and Category</h5>
+
         <form action="{{ route('section_store') }}" method="post">
             @csrf
             <div class="col-md-12" style="margin-top: 2vh;">
                 <div class="col-md-1">
-                    <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                    <label class="control-label">Select Class<font color="#FF0000">*</font></label>
                     <select class="form-control select" data-live-search="true" name="grade_id">
                         <option value="">Select</option>
                         @foreach ($grade as $grade1)
@@ -408,7 +415,7 @@
                                     <tr>
                                         <th>Sr. No.</th>
 
-                                        <th>Selected Grade</th>
+                                        <th>Selected Class</th>
                                         <th>Added Section</th>
                                         <th>Action</th>
                                     </tr>
@@ -467,7 +474,7 @@
                                 <div class="col-md-12">
 
                                     <div class="col-md-2" style="margin-right: 5px;">
-                                        <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                                        <label class="control-label">Select Class<font color="#FF0000">*</font></label>
                                         <select class="form-control select" data-live-search="true" name="grade_id"
                                             id="grade_id_option">
                                             <option value="">Select</option>
@@ -742,6 +749,8 @@
     <div class="col-md-12">
         <img src="{{ asset('img/line.png') }}" width="100%" />
     </div>
+    <h5 style="font-weight: bold;text-align: center;">Add Vendor Information</h5>
+
     <form action="{{ route('vendor_store') }}" method="post">
         @csrf
         <div class="col-md-12" style="margin-top: 2vh;">
@@ -809,7 +818,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $vendors->vendor_name }}</td>
                                         <td>{{ $vendors->mobile }}</td>
-                                        <td>{{ $vendors->cityName->city_name }}</td>
+                                        <td>{{ $vendors->cityName->city_name ?? '' }}</td>
                                         <td>{{ $vendors->email }}</td>
                                         <td>
 
@@ -909,11 +918,13 @@
       {{-- ============================================== add curriculum================================ --}}
       
         <div class="col-md-12">
+    <h5 style="font-weight: bold;text-align: center;">Add Curriculum and Reason</h5>
+
       <form action="{{ route('curriculum_store') }}" method="post">
         @csrf
 
         <div class="col-md-2">
-            <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+            <label class="control-label">Select Class<font color="#FF0000">*</font></label>
             <select class="form-control select" data-live-search="true" name="grade_id">
                 <option value="">Select</option>
                 @foreach ($grade as $grade5)
@@ -954,7 +965,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr. No.</th>
-                                    <th>Grade</th>
+                                    <th>Class</th>
 
                                     <th>Added Curriculum</th>
 
@@ -1015,7 +1026,7 @@
                         <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
                             <div class="col-md-12">
                                 <div class="col-md-3">
-                                    <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                                    <label class="control-label">Select Class<font color="#FF0000">*</font></label>
                                     <select class="form-control select" data-live-search="true" id="curriculum_grade_id"
                                         name="grade_id">
                                         <option value="">Select</option>
@@ -1056,7 +1067,7 @@
             @csrf
     
             <div class="col-md-2">
-                <label class="control-label">Add Reason<font color="#FF0000">*</font></label>
+                <label class="control-label">Add Reason(For Daily Reporting)<font color="#FF0000">*</font></label>
                 <input type="text" class="form-control" name="reason_name" placeholder="" />
             </div>
     
@@ -1322,7 +1333,7 @@
         <form action="{{ route('fitness_store') }}" method="post">
             @csrf
             <div class="col-md-1">
-                <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                <label class="control-label">Select Class<font color="#FF0000">*</font></label>
                 <select class="form-control select" data-live-search="true" name="grade_id">
                     <option value="">Select</option>
                     @foreach ($grade as $grade2)
@@ -1373,7 +1384,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr. No.</th>
-                                    <th>Selected Grade</th>
+                                    <th>Selected Class</th>
                                     <th>Selected Test</th>
                                     <th>Test Battery</th>
 
@@ -1434,7 +1445,7 @@
                         <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
                             <div class="col-md-12">
                                 <div class="col-md-2">
-                                    <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                                    <label class="control-label">Select Class<font color="#FF0000">*</font></label>
                                     <select class="form-control select" data-live-search="true" id="fitness_grade_id"
                                         name="grade_id">
                                         <option value="">Select</option>
@@ -1491,7 +1502,7 @@
         <form action="{{ route('skill_store') }}" method="post">
             @csrf
             <div class="col-md-2">
-                <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                <label class="control-label">Select Class<font color="#FF0000">*</font></label>
                 <select class="form-control select" data-live-search="true" name="grade_id">
                     <option value="">Select</option>
                     @foreach ($grade as $grade3)
@@ -1534,7 +1545,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr. No.</th>
-                                    <th>Selected Grade</th>
+                                    <th>Selected Class</th>
                                     <th>Skills</th>
 
                                     <th>Action</th>
@@ -1595,7 +1606,7 @@
                         <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
                             <div class="col-md-12">
                                 <div class="col-md-2">
-                                    <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                                    <label class="control-label">Select Class<font color="#FF0000">*</font></label>
                                     <select class="form-control select" data-live-search="true" id="skill_grade_id"
                                         name="grade_id">
                                         <option value="">Select</option>
@@ -1636,13 +1647,13 @@
     <div class="col-md-12">
         <img src="{{ asset('img/line.png') }}" width="100%" />
     </div>
-    <div class="col-md-12">
+    {{-- <div class="col-md-12">
         <h5 style="font-weight: bold;text-align: center;">Add Activity</h5>
 
         <form action="{{ route('activity_store') }}" method="post">
             @csrf
             <div class="col-md-2">
-                <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                <label class="control-label">Select Class<font color="#FF0000">*</font></label>
                 <select class="form-control select" data-live-search="true" name="grade_id">
                     <option value="">Select</option>
                     @foreach ($grade as $grade2)
@@ -1663,7 +1674,6 @@
             </div>
             <div class="col-md-2">
                 <label class="control-label">Activity<font color="#FF0000">*</font></label>
-                {{-- <input type="text" class="form-control" name="activity" placeholder="" /> --}}
                 <textarea class="form-control" name="activity"></textarea>
             </div>
 
@@ -1677,7 +1687,7 @@
             </div>
         </form>
 
-    </div>
+    </div> --}}
 
     <div class="modal" id="popup1d" tabindex="-1" role="dialog" aria-labelledby="smallModalHead"
         aria-hidden="true">
@@ -1694,7 +1704,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr. No.</th>
-                                    <th>Selected Grade</th>
+                                    <th>Selected Class</th>
                                     <th>Selected Category</th>
                                     <th>Activity</th>
 
@@ -1756,7 +1766,7 @@
                         <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
                             <div class="col-md-12">
                                 <div class="col-md-2">
-                                    <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                                    <label class="control-label">Select Class<font color="#FF0000">*</font></label>
                                     <select class="form-control select" data-live-search="true" id="activity_grade_id"
                                         name="grade_id">
                                         <option value="">Select</option>
@@ -1960,7 +1970,7 @@
                     <div class="panel-body" style="margin-top:5px; margin-bottom:15px;">
                         <div class="col-md-12">
                             <div class="col-md-2" style="margin-right: 5px;">
-                                <label class="control-label">Select Grade<font color="#FF0000">*</font></label>
+                                <label class="control-label">Select Class<font color="#FF0000">*</font></label>
                                 <select class="form-control select" data-live-search="true">
                                     <option>Class A</option>
                                     <option>Class B</option>

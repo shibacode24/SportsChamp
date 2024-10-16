@@ -75,6 +75,13 @@ Route::post('update_user',[ApiController::class,'update_user']);
 Route::get('fitness_mantra',[ApiController::class,'fitness_mantra']);
 Route::get('fitness_mantra_data',[ApiController::class,'fitness_mantra_data']);
 Route::get('get_reason_type',[ApiController::class,'get_reason_type']);
+Route::get('get_assessment_by_rollno',[ApiController::class,'get_assessment_by_rollno']);
+Route::get('get_leave_for_principle',[ApiController::class,'get_leave_for_principle']);
+Route::get('get_reporting_for_principle',[ApiController::class,'get_reporting_for_principle']);
+Route::get('principal_login',[ApiController::class,'principal_login']);
+Route::get('get_time_table',[ApiController::class,'get_time_table']);
+
+
 
 
 

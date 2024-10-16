@@ -26,13 +26,26 @@ class fitness_mantraController extends Controller
             
         ]);
       
-        $filename="";
+        // $filename="";
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('images/fitness_mantra_image'), $filename);
+    
+        // } 
+        $filename = "";
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/fitness_mantra_image'), $filename);
+            $extension = $file->getClientOriginalExtension();
     
-        } 
+            // Compress the image
+            $filePath = $file->getPathname();
+            app('compressImage')($filePath, $extension); // Single line for compression
+    
+            // Generate a new filename and move the compressed image
+            $filename = time() . '.' . $extension;
+            $file->move(public_path('images/fitness_mantra_image'), $filename);
+        }
     
       $fitness_mantra = new FitnessMantra();
       $fitness_mantra->author_name = $request->author_name;
@@ -59,13 +72,28 @@ class fitness_mantraController extends Controller
 
         $fitness_mantra =  FitnessMantra::where('id',$request->id)->first();
         
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('images/fitness_mantra_image'), $filename);
+        //     $fitness_mantra->image=$filename;
+    
+        // } 
+        $filename = "";
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
+    
+            // Compress the image
+            $filePath = $file->getPathname();
+            app('compressImage')($filePath, $extension); // Single line for compression
+    
+            // Generate a new filename and move the compressed image
+            $filename = time() . '.' . $extension;
             $file->move(public_path('images/fitness_mantra_image'), $filename);
             $fitness_mantra->image=$filename;
-    
-        } 
+
+        }
 
            $fitness_mantra->author_name = $request->author_name;
            $fitness_mantra->date= $request->date;

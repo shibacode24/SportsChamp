@@ -20,6 +20,10 @@
             style="color:#FFFFFF; height:30px; width:auto;background-color: #540338; "><i
                 class="fa fa-user"></i>Manage Employees</button>
     </a>
+    <a href="{{route('principal')}}"> <button id="on" type="button" class="btn mjks"
+        style="color:#FFFFFF; height:30px; width:auto;background-color: #6c19f1; "><i
+            class="fa fa-user"></i>Manage Principal</button>
+</a>
     <a href="{{route('manage_prop')}}"> <button id="on" type="button" class="btn mjks"
             style="color:#FFFFFF; height:30px; width:auto;background-color: #1ab9bc;"><i
                 class="fa fa-trophy"></i>Manage Props</button>
